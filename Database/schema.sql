@@ -1,14 +1,5 @@
--- ============================================================
--- ShelfScan AI - Supabase Database Schema
--- Run this in your Supabase SQL Editor
--- ============================================================
 
--- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- ─────────────────────────────────────────────
--- STORES TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS stores (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     owner_name TEXT NOT NULL,
@@ -35,10 +26,6 @@ CREATE TABLE IF NOT EXISTS stores (
 CREATE INDEX IF NOT EXISTS idx_stores_whatsapp ON stores(whatsapp_number);
 CREATE INDEX IF NOT EXISTS idx_stores_pincode ON stores(pincode);
 CREATE INDEX IF NOT EXISTS idx_stores_city ON stores(city);
-
--- ─────────────────────────────────────────────
--- SCANS TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS scans (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     store_id UUID REFERENCES stores(id) ON DELETE CASCADE,
@@ -57,10 +44,6 @@ CREATE TABLE IF NOT EXISTS scans (
 
 CREATE INDEX IF NOT EXISTS idx_scans_store_id ON scans(store_id);
 CREATE INDEX IF NOT EXISTS idx_scans_created_at ON scans(created_at DESC);
-
--- ─────────────────────────────────────────────
--- DETECTED PRODUCTS TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS detected_products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     scan_id UUID REFERENCES scans(id) ON DELETE CASCADE,
@@ -68,7 +51,7 @@ CREATE TABLE IF NOT EXISTS detected_products (
     product_name TEXT NOT NULL,
     brand TEXT,
     category TEXT,
-    stock_level TEXT NOT NULL, -- critical, low, ok, overstocked
+    stock_level TEXT NOT NULL,
     quantity_estimate INTEGER,
     facing_correct BOOLEAN DEFAULT true,
     shelf_position TEXT,
@@ -80,15 +63,11 @@ CREATE INDEX IF NOT EXISTS idx_products_scan_id ON detected_products(scan_id);
 CREATE INDEX IF NOT EXISTS idx_products_store_id ON detected_products(store_id);
 CREATE INDEX IF NOT EXISTS idx_products_stock_level ON detected_products(stock_level);
 CREATE INDEX IF NOT EXISTS idx_products_category ON detected_products(category);
-
--- ─────────────────────────────────────────────
--- DEBATE ROUNDS TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS debate_rounds (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     scan_id UUID REFERENCES scans(id) ON DELETE CASCADE,
     agent_name TEXT NOT NULL,
-    agent_type TEXT NOT NULL, -- presenter, critic, decider
+    agent_type TEXT NOT NULL,
     recommendation TEXT NOT NULL,
     reasoning TEXT,
     confidence_score INTEGER,
@@ -97,10 +76,6 @@ CREATE TABLE IF NOT EXISTS debate_rounds (
 );
 
 CREATE INDEX IF NOT EXISTS idx_debates_scan_id ON debate_rounds(scan_id);
-
--- ─────────────────────────────────────────────
--- VOICE NOTES TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS voice_notes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     scan_id UUID REFERENCES scans(id) ON DELETE CASCADE,
@@ -109,16 +84,12 @@ CREATE TABLE IF NOT EXISTS voice_notes (
     duration_seconds INTEGER,
     language TEXT DEFAULT 'hindi',
     text_content TEXT,
-    delivered_via TEXT DEFAULT 'web', -- web, whatsapp
+    delivered_via TEXT DEFAULT 'web', 
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_voice_scan_id ON voice_notes(scan_id);
 CREATE INDEX IF NOT EXISTS idx_voice_store_id ON voice_notes(store_id);
-
--- ─────────────────────────────────────────────
--- PRODUCT CATALOG TABLE (Global FMCG reference)
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS product_catalog (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     product_name TEXT NOT NULL,
@@ -130,10 +101,6 @@ CREATE TABLE IF NOT EXISTS product_catalog (
     is_fmcg BOOLEAN DEFAULT true,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
-
--- ─────────────────────────────────────────────
--- NEIGHBORHOOD DEMAND TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS neighborhood_demand (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     pincode TEXT NOT NULL,
@@ -149,16 +116,12 @@ CREATE TABLE IF NOT EXISTS neighborhood_demand (
 
 CREATE INDEX IF NOT EXISTS idx_neighborhood_pincode ON neighborhood_demand(pincode);
 CREATE INDEX IF NOT EXISTS idx_neighborhood_week ON neighborhood_demand(week_start DESC);
-
--- ─────────────────────────────────────────────
--- WHATSAPP MESSAGES TABLE
--- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS whatsapp_messages (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     store_id UUID REFERENCES stores(id),
     whatsapp_number TEXT,
-    direction TEXT NOT NULL, -- inbound, outbound
-    message_type TEXT, -- image, text, audio
+    direction TEXT NOT NULL,
+    message_type TEXT,
     message_content TEXT,
     media_url TEXT,
     twilio_sid TEXT,
@@ -168,18 +131,12 @@ CREATE TABLE IF NOT EXISTS whatsapp_messages (
 
 CREATE INDEX IF NOT EXISTS idx_wa_store_id ON whatsapp_messages(store_id);
 CREATE INDEX IF NOT EXISTS idx_wa_created ON whatsapp_messages(created_at DESC);
-
--- ─────────────────────────────────────────────
--- ROW LEVEL SECURITY (RLS)
--- ─────────────────────────────────────────────
 ALTER TABLE stores ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE detected_products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE debate_rounds ENABLE ROW LEVEL SECURITY;
 ALTER TABLE voice_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE neighborhood_demand ENABLE ROW LEVEL SECURITY;
-
--- Allow anon key to read/write (for demo - tighten in production with Auth)
 CREATE POLICY "Allow all for anon" ON stores FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all for anon" ON scans FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all for anon" ON detected_products FOR ALL USING (true) WITH CHECK (true);
@@ -189,9 +146,6 @@ CREATE POLICY "Allow all for anon" ON neighborhood_demand FOR ALL USING (true) W
 CREATE POLICY "Allow all for anon" ON product_catalog FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all for anon" ON whatsapp_messages FOR ALL USING (true) WITH CHECK (true);
 
--- ─────────────────────────────────────────────
--- SEED SOME FMCG PRODUCTS
--- ─────────────────────────────────────────────
 INSERT INTO product_catalog (product_name, brand, category, typical_mrp) VALUES
 ('Parle-G Biscuits', 'Parle', 'Biscuits', 10),
 ('Maggi 2-Minute Noodles', 'Nestle', 'Instant Food', 14),
@@ -209,7 +163,3 @@ INSERT INTO product_catalog (product_name, brand, category, typical_mrp) VALUES
 ('Lay''s Chips', 'PepsiCo', 'Snacks', 20),
 ('Coca-Cola 500ml', 'Coca-Cola', 'Beverages', 40)
 ON CONFLICT DO NOTHING;
-
--- ============================================================
--- DONE! Your ShelfScan AI database is ready.
--- ============================================================
