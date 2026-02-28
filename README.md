@@ -1,73 +1,76 @@
 ShelfScan AI
-
-ShelfScan AI is a WhatsApp-native shelf intelligence platform built for India’s 12 million kirana stores. It transforms simple shelf photographs into structured, AI-validated restocking insights and centralized retail analytics.
-
-The system enables small retailers to make data-driven inventory decisions while providing FMCG brands with real-time shelf visibility and competitive intelligence.
-
 Overview
 
-ShelfScan operates through two primary interfaces:
+ShelfScan AI is a WhatsApp-native shelf intelligence platform designed for India’s 12 million kirana stores. The platform transforms simple shelf photographs into AI-validated restocking recommendations and centralized retail analytics.
 
-WhatsApp Interface
-A store owner sends a shelf photograph via WhatsApp. The AI pipeline analyzes visible products, validates recommendations through a multi-agent reasoning layer, and delivers a prioritized restocking plan as a Hindi voice note within seconds.
-
-Centralized Web Dashboard
-A web platform that aggregates scan data and provides:
-
-Shelf health trends
-
-Stockout analytics
-
-Pincode-level demand insights
-
-Competitor share-of-shelf analysis
-
-Historical scan tracking
-
-This dual-interface design ensures accessibility for shopkeepers and strategic visibility for brand managers.
+It bridges the intelligence gap between informal retail operations and enterprise-grade data visibility.
 
 Problem Statement
 
-India’s informal retail ecosystem lacks real-time shelf intelligence. Kirana stores often rely on intuition or distributor recommendations for restocking, leading to:
+India’s kirana ecosystem operates largely without structured inventory analytics. Retailers depend on intuition or distributor influence for restocking decisions, resulting in:
 
 Frequent stockouts
 
-Overstocking and expiry losses
+Overstocking and expired inventory
 
-Poor shelf optimization
+Limited visibility into competitor shelf presence
 
-Limited visibility into competitor presence
+Lack of hyperlocal demand insights
 
-No structured demand analytics
+No centralized performance tracking
 
-FMCG brands also lack granular, on-ground shelf visibility across fragmented retail networks.
+FMCG brands also lack real-time shelf-level data across fragmented retail networks.
 
-ShelfScan addresses this intelligence gap.
+ShelfScan addresses this systemic inefficiency.
 
-Key Features
-WhatsApp-Native Access
+Solution
 
-No application installation required. Works on any smartphone with WhatsApp.
+ShelfScan introduces a dual-interface model:
 
-Computer Vision Shelf Detection
+WhatsApp Interface
 
-Automatically detects products from real-world kirana shelf images regardless of lighting or arrangement.
+Store owners send a shelf photograph via WhatsApp
 
-Multi-Agent Debate Layer
+AI reads visible products using computer vision
 
-Three AI agents validate and stress-test each recommendation before it is delivered.
+A three-agent validation system stress-tests recommendations
 
-Hindi Voice Note Output
+A prioritized restocking plan is delivered as a Hindi voice note
 
-Actionable restocking insights delivered in Hindi via voice note to ensure accessibility.
+No app installation required
 
-Centralized Analytics Dashboard
+Centralized Web Dashboard
 
-Web-based interface offering real-time and historical shelf analytics.
+Aggregates shelf scan data
 
-Competitive Intelligence
+Tracks shelf health trends
 
-Tracks competitor share-of-shelf and regional product presence trends.
+Displays stockout analytics by pincode
+
+Monitors competitor share-of-shelf
+
+Provides historical scan tracking
+
+Core Features
+1. WhatsApp-Native Accessibility
+
+Zero-install solution that works on any smartphone.
+
+2. Computer Vision Shelf Detection
+
+Accurate product recognition from real-world shelf images.
+
+3. Multi-Agent Debate Layer
+
+Three AI agents validate recommendations before delivery.
+
+4. Hindi Voice Output
+
+Voice-based insights for literacy-independent usability.
+
+5. Centralized Retail Analytics
+
+Web dashboard for aggregated insights and performance tracking.
 
 Technology Stack
 
@@ -83,7 +86,7 @@ JavaScript
 
 Google Gemini Vision (Gemini 1.5 Flash)
 
-Custom Multi-Agent Debate Layer
+Custom Multi-Agent Debate System
 
 ElevenLabs Text-to-Speech
 
@@ -93,23 +96,23 @@ Cloudinary
 
 Railway Cloud Hosting
 
-Architecture Overview
+System Architecture
 
-User uploads shelf image via WhatsApp
+Shelf image received via WhatsApp
 
-Image is stored securely via Cloudinary
+Image stored securely via Cloudinary
 
-Gemini Vision processes and extracts product data
+Gemini Vision extracts product data
 
-Multi-agent reasoning layer validates restock recommendations
+Multi-agent reasoning validates recommendations
 
-Final output is generated
+Final response generated
 
-ElevenLabs converts response into Hindi voice note
+ElevenLabs converts output into Hindi voice note
 
-Twilio delivers voice note back to the retailer
+Twilio delivers voice note to retailer
 
-Scan data is stored in PostgreSQL
+Scan data stored in PostgreSQL
 
 Dashboard visualizes aggregated analytics
 
@@ -137,36 +140,36 @@ database.py
 config.py
 Impact
 
-ShelfScan introduces structured shelf intelligence into India’s informal retail economy. It enables:
+ShelfScan enables:
 
 Reduced stockouts
 
-Improved working capital efficiency
+Improved working capital utilization
 
-Hyperlocal demand analysis
+Hyperlocal demand visibility
 
-Data-driven distribution planning
+Competitive transparency
 
-Enhanced competitive transparency
+Data-driven distribution decisions
 
-At scale, the platform has the potential to modernize shelf management across millions of kirana stores.
+The platform introduces structured shelf intelligence into India’s informal retail ecosystem at scale.
 
 Deployment
 
-The application is deployed using Railway cloud hosting. Media assets are managed through Cloudinary. The system is built for scalability and real-time processing.
+The system is deployed on Railway cloud hosting. Media storage is managed through Cloudinary. The architecture is designed for scalability and real-time processing.
 
 Future Roadmap
 
 Predictive demand forecasting
 
-Automated distributor ordering integration
+Automated distributor ordering
 
-Regional trend forecasting
+Advanced competitor analytics
 
-Credit scoring based on inventory health
+Regional consumption modeling
 
-Expanded multilingual support
+Multilingual expansion
 
 License
 
-This project is proprietary unless otherwise specified.
+Proprietary. All rights reserved.
