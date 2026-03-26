@@ -24,9 +24,6 @@
 [![License](https://img.shields.io/badge/License-MIT-4c1d95?style=for-the-badge)](LICENSE)
 
 <br/>
-
-> **Built for AMD Slingshot Hackathon** — Team Technovator
-
 <br/>
 
 ---
@@ -61,17 +58,17 @@ Sends to ShelfScan WhatsApp number
 │                              │                            │
 │              ┌───────────────┼───────────────┐            │
 │              ▼               ▼               ▼            │
-│        🎤 PRESENTER    ⚖️ CRITIC       🎯 DECIDER          │
-│        Gemini Pro      GPT-4o Mini    Gemini Pro           │
+│        🎤 PRESENTER    ⚖️ CRITIC       🎯 DECIDER        │
+│        Gemini Pro      GPT-4o Mini    Gemini Pro          │
 │        Build plan      Challenge it   Synthesise          │
 │        (urgency +      (cash flow +   (final ranked       │
 │        revenue)        expiry risk)    action plan)       │
 │              └───────────────┼───────────────┘            │
 │                              │                            │
-│                    🎙️ ElevenLabs Hindi TTS                │
+│                   🎙️ ElevenLabs Hindi TTS                │
 │                    Natural voice note (MP3)               │
 │                              │                            │
-│                    💾 Supabase PostgreSQL                  │
+│                    💾 Supabase PostgreSQL                 │
 │                    (8 tables, all data saved)             │
 └───────────────────────────────────────────────────────────┘
         │
@@ -304,18 +301,6 @@ All tables have Row Level Security enabled. Indexes on all foreign keys and freq
 
 ---
 
-## The AMD Connection
-
-ShelfScan AI is built for deployment on AMD hardware:
-
-- **AMD Instinct MI300X GPUs** — run local Gemini-class vision models at inference time (production scale)
-- **AMD Ryzen AI Edge** — on-device pre-processing for shelf images before cloud upload, reducing latency to under 5 seconds
-- **ROCm Software Stack** — enables the full AI pipeline to run on AMD silicon without CUDA dependency
-
-The multi-agent debate architecture is specifically designed to exploit AMD's high-memory bandwidth (MI300X has 192GB HBM3) — all three agents can be loaded simultaneously and queried in parallel.
-
----
-
 ## Roadmap
 
 - [ ] **Real-time shelf monitoring** — continuous CCTV feed analysis, not just on-demand photos
@@ -348,7 +333,7 @@ MIT — see [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Built with obsession at the AMD Slingshot Hackathon**
+**Built with obsession**
 
 *For India's kirana store owners who deserve better tools.*
 
