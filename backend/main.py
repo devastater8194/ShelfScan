@@ -529,13 +529,13 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
         greet_msgs = {"hi", "hello", "hey", "help", "start", "scan", "namaste", "namaskar"}
         if any(w in body_text for w in greet_msgs) or body_text == "":
             reply = (
-                "Namaskar! Main ShelfScan AI hoon 🤖\n\n"
-                "Apni shelf ki photo bhejiye aur main 30 seconds mein bataunga:\n"
-                "• Kya order karna chahiye\n"
-                "• Kitna stock bacha hai\n"
-                "• Kaisi shelf rearrange karein\n\n"
-                "Hindi voice note mein recommendation milega! 🎙️\n\n"
-                "Agar aap naye hain toh pehle register karein:\n"
+                "Hello! I am ShelfScan AI 🤖\n\n"
+                "Please send a photo of your shelf, and in 30 seconds I will tell you:\n"
+                "• What products need to be ordered\n"
+                "• Current stock levels\n"
+                "• How to rearrange your shelf for optimal display\n\n"
+                "You will receive a recommendation in a Hindi voice note! 🎙️\n\n"
+                "If you are a new user, please register first:\n"
                 f"🔗 shelfscan.ai"
             )
             return Response(
@@ -546,7 +546,7 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
 
         return Response(
             content="""<?xml version="1.0" encoding="UTF-8"?>
-<Response><Message><Body>Shelf ki photo bhejiye — main analysis karunga! 📸</Body></Message></Response>""",
+<Response><Message><Body>Please send a photo of your shelf for analysis! 📸</Body></Message></Response>""",
             media_type="text/xml"
         )
 
@@ -556,7 +556,7 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
     if not media_url:
         return Response(
             content="""<?xml version="1.0" encoding="UTF-8"?>
-<Response><Message><Body>Image receive nahi hui. Please dobara try karein.</Body></Message></Response>""",
+<Response><Message><Body>Image not received. Please try again.</Body></Message></Response>""",
             media_type="text/xml"
         )
 
