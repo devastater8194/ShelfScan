@@ -11,11 +11,7 @@
     rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
   <style>
-    /* ══════════════════════════════════════════════
-   DESIGN SYSTEM — INDUSTRIAL NEON
-   Aesthetic: Blade Runner x Bloomberg Terminal
-   Unforgettable: Data flows as living organisms
-══════════════════════════════════════════════ */
+
     :root {
       --void: #03070f;
       --deep: #060d1a;
@@ -86,7 +82,7 @@
       border-radius: 2px;
     }
 
-    /* ─── REGISTER SECTION (at bottom of landing) ─── */
+    
     .register-section {
       padding: 80px 24px;
       background: var(--surface);
@@ -198,7 +194,7 @@
     }
 
 
-    /* ── NOISE + SCAN LINE ── */
+  
     body::before {
       content: '';
       position: fixed;
@@ -229,7 +225,6 @@
       }
     }
 
-    /* ── CANVAS BACKGROUNDS ── */
     #bgCanvas {
       position: fixed;
       inset: 0;
@@ -237,7 +232,6 @@
       pointer-events: none;
     }
 
-    /* ── PAGE SYSTEM ── */
     .page {
       display: none;
       position: relative;
@@ -260,7 +254,6 @@
       margin-top: 64px;
     }
 
-    /* ══ NAVBAR ══ */
     #nav {
       position: fixed;
       top: 0;
@@ -353,7 +346,6 @@
       align-items: center;
     }
 
-    /* ══ BUTTONS ══ */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -457,7 +449,6 @@
       width: 100%;
     }
 
-    /* ══ MODAL ══ */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -557,7 +548,6 @@
       line-height: 1.6;
     }
 
-    /* ══ FORMS ══ */
     .field {
       margin-bottom: 16px;
     }
@@ -585,7 +575,7 @@
       font-size: 14px;
       outline: none;
       transition: border-color .2s, box-shadow .2s;
-      /* -webkit-appearance:none; */
+
     }
 
     .field select {
@@ -654,9 +644,6 @@
       color: var(--red);
     }
 
-    /* ══════════════════════════════════════
-   LANDING PAGE
-══════════════════════════════════════ */
     #hero {
       position: relative;
       min-height: 100vh;
@@ -815,7 +802,6 @@
       animation: subIn .8s var(--ease) .85s both;
     }
 
-    /* Live metrics strip */
     .hero-metrics {
       display: flex;
       gap: 0;
@@ -879,7 +865,6 @@
       color: var(--t3);
     }
 
-    /* ══ MARQUEE ══ */
     .marquee {
       overflow: hidden;
       border-top: 1px solid rgba(0, 255, 136, .06);
@@ -934,7 +919,6 @@
       }
     }
 
-    /* ══ FEATURES BENTO ══ */
     #features {
       padding: 100px 32px;
       position: relative;
@@ -980,7 +964,6 @@
       color: var(--acid);
     }
 
-    /* BENTO GRID */
     .bento {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -1018,7 +1001,6 @@
       opacity: 1;
     }
 
-    /* Grid placement */
     .bc.span-5 {
       grid-column: span 5;
     }
@@ -1123,7 +1105,6 @@
       color: var(--orange);
     }
 
-    /* AI Debate Visual */
     .debate-visual {
       margin-top: 20px;
       display: flex;
@@ -1219,12 +1200,8 @@
       }
     }
 
-    /* ══ REGISTER SECTION ══ */
-    /* ============================================================
-   DESIGN SYSTEM UPDATES & MISSING VARIABLES (Crucial)
-   ============================================================ */
     :root {
-      /* Existing vars (retaining) */
+  
       --void: #03070f;
       --deep: #060d1a;
       --panel: #0a1527;
@@ -1238,19 +1215,14 @@
       --disp: 'Outfit', sans-serif;
       --mono: 'JetBrains Mono', monospace;
 
-      /* MISSING VARIABLES ADDED (Based on your schema) */
       --g2: rgba(255, 255, 255, 0.08);
-      /* Border color */
+    
       --surface2: #060d1a;
-      /* Input background */
+     
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ============================================================
-   REGISTER SECTION (Two-Column Layout like Image 1)
-   /* ══ REGISTER SECTION (FINAL FIX) ══ */
-    /* ══ REGISTER SECTION (FINAL CLEAN & CENTERED) ══ */
-    /* ══ REGISTER SECTION (FINAL CLEAN & CENTERED) ══ */
+
     #register {
       padding: 40px 32px 0 32px;
       background: var(--void);
@@ -1265,18 +1237,17 @@
       padding-bottom: 60px;
     }
 
-    /* Hide the left column with feature bullets */
+    
     .reg-inner>.rl {
       display: none !important;
     }
 
-    /* Also hide the section-tag and h2 above the form */
+   
     #register .section-tag,
     #register .section-h {
       display: none !important;
     }
 
-    /* Make the form side take full width */
     .reg-inner>.rr {
       width: 100%;
     }
@@ -1307,16 +1278,6 @@
       border-top: 1px solid var(--g2);
     }
 
-    /* Glowing top border like Image 1 */
-    /* .reg-form-side::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--acid), var(--cyan));
-    } */
 
     .form-header {
       margin-bottom: 32px;
@@ -1339,7 +1300,6 @@
       color: var(--t3);
     }
 
-    /* Form Fields Styling (Same as dashboard) */
     .form-field {
       margin-bottom: 20px;
     }
@@ -1393,7 +1353,7 @@
       box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
     }
 
-    /* Responsive (Mobile) */
+   
     @media (max-width: 992px) {
       .reg-container {
         grid-template-columns: 1fr;
@@ -1409,9 +1369,6 @@
       }
     }
 
-    /* ============================================================
-   FOOTER (Two-Column, Navigation on Right like Image 4)
-   ============================================================ */
     .footer {
       background: var(--deep);
       border-top: 1px solid var(--g2);
@@ -1425,12 +1382,12 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: 2fr 1fr;
-      /* Image 4 design: Main info + Nav */
+     
       gap: 60px;
       margin-bottom: 40px;
     }
 
-    /* Left side: Logo & Credits */
+    
     .footer-main-info {
       display: flex;
       flex-direction: column;
@@ -1461,7 +1418,7 @@
       margin-top: 4px;
     }
 
-    /* Right side: Navigation */
+   
     .footer-nav-section h4 {
       font-family: var(--mono);
       font-size: 10px;
@@ -1487,7 +1444,6 @@
       color: var(--acid);
     }
 
-    /* Bottom Bar: Copyright & Tech Links */
     .footer-bottom {
       max-width: 1200px;
       margin: 0 auto;
@@ -1506,7 +1462,7 @@
       gap: 16px;
     }
 
-    /* Responsive Footer */
+    
     @media (max-width: 768px) {
       .footer-inner {
         grid-template-columns: 1fr;
@@ -1526,43 +1482,6 @@
     }
 
 
-
-    /* #register{padding:100px 32px;position:relative;z-index:1;background:linear-gradient(to bottom,var(--void),var(--deep),var(--void));}
-.reg-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.reg-perks{margin-top:32px;display:flex;flex-direction:column;gap:10px;}
-.rperk{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:10px;background:var(--panel);border:1px solid var(--g2);transition:all .25s;}
-.rperk:hover{border-color:rgba(255, 0, 0, 0.2);background:var(--surface);}
-.rperk-ic{font-size:20px;flex-shrink:0;margin-top:2px;}
-.rperk-t{font-size:14px;font-weight:600;color:var(--t0);margin-bottom:3px;}
-.rperk-d{font-size:13px;color:var(--t2);line-height:1.5;}
-.reg-form{background:var(--panel);border:1px solid var(--g2);border-radius:16px;padding:36px;position:relative;overflow:hidden;}
-.reg-form::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--acid),var(--cyan));}
-.reg-form-title{font-family:var(--disp);font-size:28px;font-weight:800;color:var(--t0);margin-bottom:4px;letter-spacing:-.5px;}
-.reg-form-sub{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--t3);margin-bottom:28px;}
-
-/* ══ FOOTER ══ */
-    /* .footer{position:relative;z-index:1;background:var(--deep);border-top:1px solid var(--g2);padding:48px 32px;}
-.footer-inner{max-width:1200px;margin:0 auto;display:flex;gap:40px;justify-content:space-between;flex-wrap:wrap;align-items:flex-start;}
-.footer-logo{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--t0);margin-bottom:8px;}
-.footer-tagline{font-size:13px;color:var(--t2);line-height:1.6;max-width:260px;margin-bottom:14px;}
-.footer-credit{font-family:var(--mono);font-size:10px;color:var(--t3);line-height:1.8;}
-.footer-links{display:flex;gap:6px;flex-wrap:wrap;}
-.footer-links a{padding:7px 13px;border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--t2);text-decoration:none;border:1px solid var(--g2);background:var(--g1);transition:all .2s;}
-.footer-links a:hover{color:var(--acid);border-color:rgba(255, 0, 0, 0.2);}
-.footer-bottom{margin-top:32px;padding-top:20px;border-top:1px solid var(--g2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.footer-copy{font-family:var(--mono);font-size:10px;color:var(--t3);} */
-
-    /* ══ REVEAL ANIMATIONS ══ */
-    /* .rv{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
-.rl{opacity:0;transform:translateX(-28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
-.rr{opacity:0;transform:translateX(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
-.rs{opacity:0;transform:scale(.93);transition:opacity .6s var(--ease),transform .6s var(--ease);}
-.rv.up,.rl.up,.rr.up,.rs.up{opacity:1;transform:none;} */
-    */
-
-    /* ══════════════════════════════════════
-   DASHBOARD
-══════════════════════════════════════ */
     .dash-sidebar {
       width: 220px;
       flex-shrink: 0;
@@ -1710,7 +1629,6 @@
       color: var(--t3);
     }
 
-    /* TAB SYSTEM */
     .dtab {
       display: none;
     }
@@ -1732,7 +1650,6 @@
       }
     }
 
-    /* KPI CARDS */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1835,7 +1752,6 @@
       color: var(--red);
     }
 
-    /* PANELS */
     .panel {
       background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(12px);
@@ -1900,7 +1816,6 @@
       gap: 14px;
     }
 
-    /* ALERTS */
     .alert-list {
       display: flex;
       flex-direction: column;
@@ -1942,7 +1857,6 @@
       color: var(--acid);
     }
 
-    /* TABLE */
     .tbl {
       width: 100%;
       border-collapse: collapse;
@@ -2007,7 +1921,6 @@
       border: 1px solid rgba(0, 212, 255, .2);
     }
 
-    /* SCAN CARDS */
     .scan-card {
       display: grid;
       grid-template-columns: 80px 1fr auto;
@@ -2092,7 +2005,6 @@
       border: 1px solid rgba(255, 59, 59, .2);
     }
 
-    /* UPLOAD ZONE */
     .upload-zone {
       border: 2px dashed var(--g3);
       border-radius: 16px;
@@ -2141,7 +2053,6 @@
       color: var(--t3);
     }
 
-    /* PIPELINE */
     .pipeline {
       display: flex;
       gap: 2px;
@@ -2186,7 +2097,6 @@
       content: '✓ ';
     }
 
-    /* DEBATE */
     .debate-card {
       padding: 16px 18px;
       border-radius: 10px;
@@ -2281,7 +2191,6 @@
       color: var(--t3);
     }
 
-    /* VOICE PLAYER */
     .voice-player {
       padding: 18px;
       border-radius: 10px;
@@ -2360,7 +2269,6 @@
       }
     }
 
-    /* NEIGHBOR */
     .comp-card {
       padding: 14px 16px;
       border-radius: 8px;
@@ -2404,7 +2312,6 @@
       color: var(--orange);
     }
 
-    /* EMPTY / LOADER */
     .empty {
       padding: 48px;
       text-align: center;
@@ -2456,7 +2363,6 @@
       }
     }
 
-    /* AI DEBATE LIVE STREAM */
     .debate-stream {
       background: var(--deep);
       border: 1px solid rgba(0, 255, 136, .1);
@@ -2505,7 +2411,6 @@
       }
     }
 
-    /* REAL-TIME HEALTH GAUGE */
     .health-gauge {
       display: flex;
       flex-direction: column;
@@ -2560,7 +2465,6 @@
       font-weight: 400;
     }
 
-    /* RESPONSIVE */
     @media(max-width:1024px) {
       .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -2633,7 +2537,6 @@
 
   <div id="hyperspeed-root"></div>
 
-  <!-- ═══ NAV ═══ -->
   <nav id="nav">
     <a class="nav-brand" href="#" onclick="goLand();return false;">
 
@@ -2650,7 +2553,6 @@
     </div>
   </nav>
 
-  <!-- ═══ LOGIN MODAL ═══ -->
   <div class="modal-bg" id="loginModal" onclick="if(event.target===this)closeLogin()">
     <div class="modal">
       <button class="modal-x" onclick="closeLogin()">✕</button>
@@ -2667,10 +2569,8 @@
     </div>
   </div>
 
-  <!-- ═══════════ LANDING ═══════════ -->
   <div id="landing" class="page active">
 
-    <!-- HERO -->
     <section id="hero">
       <div class="hero-grid"></div>
       <div class="hero-content">
@@ -2714,12 +2614,10 @@
       </div>
     </section>
 
-    <!-- MARQUEE -->
     <div class="marquee">
       <div class="marquee-inner" id="mqi"></div>
     </div>
 
-    <!-- FEATURES BENTO -->
     <section id="features" style="padding:100px 32px;position:relative;z-index:1;">
       <div style="max-width:1280px;margin:0 auto;">
         <div class="rv">
@@ -2730,7 +2628,6 @@
       </div>
     </section>
 
-    <!-- BIG CTA SECTION -->
     <section id="cta" class="rv"
       style="padding: 100px 32px; text-align: center; background: linear-gradient(to bottom, transparent, var(--deep));">
       <div class="hero-content" style="max-width: 800px; margin: 0 auto;">
@@ -2743,12 +2640,10 @@
       </div>
     </section>
 
-    <!-- MARQUEE -->
     <div class="marquee rv" style="margin-bottom: 60px;">
       <div class="marquee-inner" id="mqi"></div>
     </div>
 
-    <!-- REGISTER -->
     <section id="register"
       style="padding:100px 32px;position:relative;z-index:1;background:linear-gradient(to bottom,var(--void),var(--deep) 50%,var(--void));">
       <div style="max-width:1100px;margin:0 auto;">
@@ -2896,8 +2791,6 @@
       </div>
     </footer>
   </div>
-
-  <!-- ═══════════ DASHBOARD ═══════════ -->
   <div id="dash-view" style="position:relative;background:#000;">
     <div id="particles-root"></div>
     <aside class="dash-sidebar"
@@ -2926,7 +2819,7 @@
     </aside>
 
     <main class="dash-main">
-      <!-- OVERVIEW -->
+    
       <div id="tab-overview" class="dtab on">
         <div class="dash-header">
           <div class="dash-title" id="dtitle">Overview</div>
@@ -3012,7 +2905,6 @@
         </div>
       </div>
 
-      <!-- SCAN TAB -->
       <div id="tab-scan" class="dtab">
         <div class="dash-header">
           <div class="dash-title">New Shelf Scan</div>
@@ -3033,7 +2925,7 @@
           <div class="pip" id="p4">4 · Voice</div>
           <div class="pip" id="p5">5 · Saved</div>
         </div>
-        <!-- DEBATE LIVE STREAM -->
+       
         <div id="debateStream" style="display:none;">
           <div class="debate-stream">
             <div class="debate-stream-header">
@@ -3047,7 +2939,6 @@
         <div id="scanOutput" style="display:none;"></div>
       </div>
 
-      <!-- HISTORY -->
       <div id="tab-history" class="dtab">
         <div class="dash-header">
           <div class="dash-title">Scan History</div>
@@ -3059,7 +2950,6 @@
         </div>
       </div>
 
-      <!-- INVENTORY -->
       <div id="tab-inventory" class="dtab">
         <div class="dash-header">
           <div class="dash-title">Inventory Status</div>
@@ -3076,7 +2966,6 @@
         </div>
       </div>
 
-      <!-- NEIGHBORHOOD -->
       <div id="tab-neighborhood" class="dtab">
         <div class="dash-header">
           <div class="dash-title">Neighbourhood Intelligence</div>
@@ -3106,7 +2995,6 @@
         </div>
       </div>
 
-      <!-- VOICES -->
       <div id="tab-voices" class="dtab">
         <div class="dash-header">
           <div class="dash-title">Voice Notes Archive</div>
@@ -3122,24 +3010,19 @@
     </main>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-     JAVASCRIPT — FULL SYSTEM
-══════════════════════════════════════════════ -->
   <script>
     'use strict';
 
-    /* ── CONFIG ── */
     const SB_URL = 'https://qdnwfrbxxfshvuchencs.supabase.co';
     const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkbndmcmJ4eGZzaHZ1Y2hlbmNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODQ3OTksImV4cCI6MjA4Nzc2MDc5OX0.KgetXytfa6VFUouWCFWvlG6kgaNQZKjPIx3R3mtdCjY';
-    const GEMINI_KEY = 'AIzaSyBqs0CV4MROjYy3q64ffS2xszO6bIjprZw'; // Browser fallback only
+    const GEMINI_KEY = 'AIzaSyBqs0CV4MROjYy3q64ffS2xszO6bIjprZw';
     const OPENAI_KEY = '';
-    const GROQ_KEY = ''; // Add free key from console.groq.com for better Critic agent
-    const API_BASE = 'http://localhost:8000'; // ← Change to Railway URL in production
+    const GROQ_KEY = ''; 
+    const API_BASE = 'http://localhost:8000'; 
 
     let STORE = null;
     let scanChart = null;
 
-    /* ── SUPABASE ── */
     const sb = (table, qs = '') =>
       fetch(`${SB_URL}/rest/v1/${table}${qs}`, {
         headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
@@ -3159,7 +3042,6 @@
         body: JSON.stringify(data)
       });
 
-    /* ── CANVAS BACKGROUND — PARTICLE NETWORK ── */
     (function initCanvas() {
       const c = document.getElementById('bgCanvas');
       const ctx = c.getContext('2d');
@@ -3179,7 +3061,7 @@
 
       function draw() {
         ctx.clearRect(0, 0, W, H);
-        // Draw connections
+        
         for (let i = 0; i < pts.length; i++) {
           for (let j = i + 1; j < pts.length; j++) {
             const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
@@ -3194,7 +3076,7 @@
             }
           }
         }
-        // Draw points
+       
         pts.forEach(p => {
           p.x += p.vx; p.y += p.vy;
           if (p.x < 0 || p.x > W) p.vx *= -1;
@@ -3209,7 +3091,6 @@
       draw();
     })();
 
-    /* ── MARQUEE BUILD ── */
     (function buildMarquee() {
       const items = [
         ['⚡', '3-Agent AI Debate'], ['🇮🇳', '12M Kirana Stores'], ['🧠', 'Gemini 1.5 Pro Vision'],
@@ -3222,13 +3103,11 @@
         `<div class="mitem"><span class="mitem-dot">${i}</span>${l}</div>`).join('');
     })();
 
-    /* ── SCROLL REVEAL ── */
     const revObs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('up'); });
     }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
     document.querySelectorAll('.rv,.rl,.rr,.rs').forEach(el => revObs.observe(el));
 
-    /* ── COUNTERS ── */
     const cntObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
@@ -3243,7 +3122,6 @@
     }, { threshold: .5 });
     document.querySelectorAll('.cnt').forEach(el => cntObs.observe(el));
 
-    /* ── ROUTING ── */
     function goLand() {
       document.getElementById('landing').classList.add('active');
       const d = document.getElementById('dash-view');
@@ -3261,7 +3139,6 @@
       }, 100);
     }
 
-    /* ── LOGIN / MODAL ── */
     function openLogin() { document.getElementById('loginModal').classList.add('open'); }
     function closeLogin() { document.getElementById('loginModal').classList.remove('open'); }
     document.getElementById('lphone').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
@@ -3278,13 +3155,11 @@
       try {
         let found = null;
 
-        // Try backend first
         try {
           const r = await fetch(`${API_BASE}/api/stores/login/${encodeURIComponent(phone)}`);
           if (r.ok) { const d = await r.json(); found = d.store; }
         } catch { }
 
-        // Direct Supabase fallback — try multiple phone formats
         if (!found) {
           const clean = phone.replace(/[\s\-\(\)]/g, '');
           const variants = [
@@ -3316,7 +3191,6 @@
       btn.disabled = false; btn.textContent = 'Access Dashboard →';
     }
 
-    /* ── REGISTER ── */
     async function doRegister(e) {
       e.preventDefault();
       const btn = document.getElementById('regBtn');
@@ -3324,7 +3198,6 @@
       btn.disabled = true; btn.textContent = 'Registering...';
       msg.className = 'fmsg'; msg.style.display = 'none';
 
-      // Fields the backend Pydantic model accepts
       const apiData = {
         owner_name: document.getElementById('r_own').value.trim(),
         whatsapp_number: document.getElementById('r_ph').value.trim().replace(/[\s\-\(\)]/g, ''),
@@ -3340,15 +3213,12 @@
         gst_number: document.getElementById('r_gs').value.trim().toUpperCase() || null,
         referral_code: document.getElementById('r_rf').value.trim().toUpperCase() || null
       };
-
-      // Extra fields only for Supabase direct insert
       const sbData = {
         ...apiData,
         registered_at: new Date().toISOString(),
         status: 'active', total_scans: 0, shelf_health_score: 0
       };
 
-      // Validate Indian phone number
       const ph = apiData.whatsapp_number;
       if (!/^(\+91|91)?[6-9]\d{9}$/.test(ph)) {
         showMsg(msg, 'err', 'Please enter a valid 10-digit Indian mobile number.');
@@ -3358,7 +3228,6 @@
       try {
         let ok = false, storeData = null;
 
-        // Try backend first
         try {
           const r = await fetch(`${API_BASE}/api/stores/register`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -3372,9 +3241,8 @@
           }
         } catch (be) { if (be.message.includes('already')) throw be; console.warn('Backend unreachable:', be.message); }
 
-        // Direct Supabase fallback
         if (!ok) {
-          // Check for existing registration first
+          
           try {
             const existing = await sb('stores', `?whatsapp_number=eq.${encodeURIComponent(apiData.whatsapp_number)}&select=id&limit=1`);
             if (existing?.length) throw new Error('This WhatsApp number is already registered. Please login instead.');
@@ -3396,7 +3264,7 @@
           document.getElementById('regForm').reset();
           btn.textContent = '✓ Registered Successfully!';
           btn.style.background = 'var(--acid2)';
-          // Auto-login after brief delay
+          
           if (storeData) {
             setTimeout(() => {
               STORE = storeData;
@@ -3414,7 +3282,6 @@
       if (btn.textContent !== '✓ Registered Successfully!') btn.textContent = 'Activate ShelfScan AI →';
     }
 
-    /* ── DASHBOARD INIT ── */
     function initDashboard(s) {
       document.getElementById('sb-name').textContent = s.store_name || 'My Store';
       document.getElementById('sb-phone').textContent = s.whatsapp_number || '—';
@@ -3429,7 +3296,6 @@
     }
     setInterval(updateClock, 60000);
 
-    /* ── FETCH SCAN DATA ── */
     async function fetchScanActivity(sid) {
       try {
         const resp = await fetch(`${API_BASE}/api/scans?store_id=${sid}&order=created_at.desc&limit=100`);
@@ -3445,18 +3311,15 @@
       }
     }
 
-    /* ── LOAD OVERVIEW ── */
     async function loadOverview(sid) {
       try {
         let dash = null;
 
-        // Try backend
         try {
           const r = await fetch(`${API_BASE}/api/dashboard/${sid}`);
           if (r.ok) dash = await r.json();
         } catch { }
 
-        // Build from Supabase directly
         if (!dash) {
           const [scans, prods, voices] = await Promise.all([
             fetchScanActivity(sid),
@@ -3531,7 +3394,6 @@
       if (!alerts?.length) { c.innerHTML = '<div class="alert-row ok">✓ No alerts — all shelves healthy</div>'; }
       else c.innerHTML = alerts.map(a => `<div class="alert-row ${a.type}">${a.type === 'crit' ? '🔴' : a.type === 'warn' ? '🟡' : '🔵'} ${a.msg}</div>`).join('');
 
-      // Stockouts
       const sl = document.getElementById('stockoutList');
       const stockouts = (prods || []).filter(p => p.stock_level === 'critical');
       if (!stockouts.length) { sl.innerHTML = '<div style="padding:12px;font-family:var(--mono);font-size:12px;color:var(--t3);">No critical stockouts</div>'; return; }
@@ -3604,7 +3466,7 @@
       const offset = circ - (score / 100) * circ;
       fill.style.strokeDashoffset = offset;
       fill.style.stroke = score >= 70 ? 'var(--acid)' : score >= 40 ? 'var(--orange)' : 'var(--red)';
-      // Animate number
+     
       let cur = 0;
       const tm = setInterval(() => {
         cur += score / 40; if (cur >= score) { cur = score; clearInterval(tm); }
@@ -3612,7 +3474,6 @@
       }, 25);
     }
 
-    /* ── TABS ── */
     function swTab(name, btn) {
       document.querySelectorAll('.dtab').forEach(t => t.classList.remove('on'));
       document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('on'));
@@ -3626,7 +3487,6 @@
 
     }
 
-    /* ── HISTORY ── */
     async function loadHistory(sid) {
       const c = document.getElementById('histList'); c.innerHTML = mkLoader();
       try {
@@ -3668,7 +3528,6 @@
       } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
     }
 
-    /* ── INVENTORY ── */
     async function loadInventory(sid) {
       const c = document.getElementById('invTable'); c.innerHTML = mkLoader();
       try {
@@ -3680,7 +3539,6 @@
       } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
     }
 
-    /* ── NEIGHBORHOOD ── */
     async function loadNeighborhood(sid) {
       const pin = STORE?.pincode;
       document.getElementById('pinlbl').textContent = pin ? `PIN ${pin}` : '';
@@ -3706,14 +3564,12 @@
       } catch (e) { cc.innerHTML = dc.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
     }
 
-    /* ── VOICES ── */
     async function loadVoices(sid) {
       const c = document.getElementById('voicesList'); c.innerHTML = mkLoader();
       try {
         const notes = await sb('voice_notes', `?store_id=eq.${sid}&select=*&order=created_at.desc&limit=20`);
         if (!notes?.length) { c.innerHTML = mkEmpty('🎙️', 'No voice notes', 'Generated automatically after each scan.'); return; }
 
-        // For each voice note, try to load associated scan products for structured table
         const notesHtml = await Promise.all(notes.map(async n => {
           let structuredHtml = '';
           if (n.scan_id) {
@@ -3745,13 +3601,6 @@
       } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
     }
 
-
-
-    /* ═══════════════════════════════════════
-       SCAN PIPELINE — FULL AI INTEGRATION
-    ═══════════════════════════════════════ */
-
-    /* Image select */
     function onImgSelect(inp) {
       if (!inp.files?.[0]) return;
       const reader = new FileReader();
@@ -3764,8 +3613,6 @@
       };
       reader.readAsDataURL(inp.files[0]);
     }
-
-    // Drag & drop
     const uz = document.getElementById('uploadZone');
     uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
     uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
@@ -3796,7 +3643,6 @@
       }, speed);
     }
 
-    /* MAIN SCAN FUNCTION */
     async function runScan() {
       if (!STORE) { openLogin(); return; }
       const inp = document.getElementById('imgInput');
@@ -3809,13 +3655,11 @@
       for (let i = 1; i <= 5; i++) setPip(i, '');
       setPip(1, 'active');
 
-      // Try backend first — it handles everything
       try {
         const fd = new FormData();
         fd.append('store_id', STORE.id);
         fd.append('image', inp.files[0]);
 
-        // Show debate stream UI
         document.getElementById('debateStream').style.display = 'block';
         document.getElementById('streamAgent').textContent = '🔍 Uploading to Cloudinary...';
         streamText('tokenStream', 'Uploading image to CDN...');
@@ -3828,7 +3672,6 @@
 
         const data = await r.json();
 
-        // Animate pipeline
         setPip(2, 'done'); setPip(3, 'active');
         document.getElementById('streamAgent').textContent = '⚖️ AI Debate Complete';
         streamText('tokenStream', data.final_recommendation || 'Analysis complete.');
@@ -3844,8 +3687,7 @@
         loadOverview(STORE.id);
 
       } catch (backendErr) {
-        // ── FRONTEND-ONLY AI MODE (No Backend) ──
-        // Uses Gemini API directly from browser, then simulates debate
+     
         console.log('Backend unavailable, using frontend AI mode:', backendErr.message);
         await runFrontendAI(inp.files[0]);
       }
@@ -3857,14 +3699,12 @@
       const debStream = document.getElementById('debateStream');
       debStream.style.display = 'block';
 
-      // Step 1: Convert image to base64
       setPip(1, 'active');
       document.getElementById('streamAgent').textContent = '📸 Processing image...';
       streamText('tokenStream', 'Converting image for AI analysis...');
       const b64 = await fileToB64(imageFile);
       setPip(1, 'done'); setPip(2, 'active');
 
-      // Step 2: Gemini Vision Analysis
       document.getElementById('streamAgent').textContent = '👁️ Gemini 1.5 Pro — Analysing shelf...';
       let visionResult = null;
       try {
@@ -3878,12 +3718,10 @@
 
       await sleep(500);
 
-      // Step 3: AI Debate
       document.getElementById('streamAgent').textContent = '⚖️ Running 3-Agent AI Debate...';
 
       const debateRounds = [];
 
-      // PRESENTER — Gemini Pro
       document.getElementById('streamAgent').textContent = '🎤 Presenter (Gemini Pro) — Building restock plan...';
       let presenterOutput = '';
       try {
@@ -3896,7 +3734,6 @@
       }
       await sleep(800);
 
-      // CRITIC — GPT-4o Mini (via OpenAI) or Groq fallback
       document.getElementById('streamAgent').textContent = '⚖️ Critic — Challenging economics...';
       let criticOutput = '';
       try {
@@ -3909,7 +3746,6 @@
       }
       await sleep(800);
 
-      // DECIDER — Gemini Pro
       document.getElementById('streamAgent').textContent = '🎯 Decider (Gemini) — Synthesising final plan...';
       let deciderOutput = '';
       let hindiText = '';
@@ -3926,7 +3762,6 @@
 
       setPip(3, 'done'); setPip(4, 'active');
 
-      // Step 4: Save to Supabase
       document.getElementById('streamAgent').textContent = '💾 Saving to database...';
       const scanId = await saveScanToSupabase(visionResult, debateRounds, hindiText || deciderOutput, imageFile);
       streamText('tokenStream', hindiText || deciderOutput);
@@ -3935,7 +3770,6 @@
       await sleep(300);
       setPip(5, 'done');
 
-      // Render output
       const synthResult = {
         scan_id: scanId,
         shelf_health_score: visionResult.shelf_health_score || 0,
@@ -3949,7 +3783,6 @@
       await loadOverview(STORE.id);
     }
 
-    /* ── AI API CALLS ── */
     async function callGeminiVision(b64, mimeType) {
       const prompt = `You are an expert FMCG shelf analyst for Indian kirana stores. Analyse this shelf image and return ONLY valid JSON (no markdown, no extra text):
 {
@@ -4009,7 +3842,7 @@ Write 3-4 paragraphs in English. Be specific and actionable.`;
     }
 
     async function callGroqCritic(presenterPlan, vision) {
-      // Try Groq (free, fast) - needs GROQ_KEY
+     
       if (GROQ_KEY) {
         const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -4064,10 +3897,9 @@ Synthesise the best final action plan. Return ONLY JSON:
       return JSON.parse(text);
     }
 
-    /* ── SAVE TO SUPABASE ── */
     async function saveScanToSupabase(vision, debates, finalRec, imageFile) {
       try {
-        // Create scan record
+      
         const scanData = {
           store_id: STORE.id,
           status: 'completed',
@@ -4088,7 +3920,7 @@ Synthesise the best final action plan. Return ONLY JSON:
         }
 
         if (scanId && vision.products?.length) {
-          // Save detected products
+         
           const products = vision.products.map(p => ({
             scan_id: scanId, store_id: STORE.id,
             product_name: p.product_name || p.name,
@@ -4101,7 +3933,7 @@ Synthesise the best final action plan. Return ONLY JSON:
           }));
           await sbPost('detected_products', products);
 
-          // Save debate rounds
+          
           const dRounds = debates.map(d => ({
             scan_id: scanId, agent_name: d.agent, agent_type: d.type,
             recommendation: d.output, confidence_score: d.confidence || 75,
@@ -4109,7 +3941,6 @@ Synthesise the best final action plan. Return ONLY JSON:
           }));
           await sbPost('debate_rounds', dRounds);
 
-          // Update store stats
           await sbPatch('stores', STORE.id, {
             total_scans: (STORE.total_scans || 0) + 1,
             shelf_health_score: vision.shelf_health_score || 0,
@@ -4121,7 +3952,6 @@ Synthesise the best final action plan. Return ONLY JSON:
       } catch (e) { console.error('Supabase save error:', e); return null; }
     }
 
-    /* ── STRUCTURED REPORT TABLE ── */
     function mkStructuredReport(report) {
       if (!report?.length) return '';
       return `
@@ -4148,7 +3978,6 @@ Synthesise the best final action plan. Return ONLY JSON:
     </div>`;
     }
 
-    /* Build structured report from vision products as fallback */
     function buildStructuredFromVision(products) {
       if (!products?.length) return [];
       const priorityMap = { critical: '🔴 URGENT', low: '🟡 HIGH', ok: '🟢 OK', overstocked: '🔵 OVERSTOCKED' };
@@ -4160,7 +3989,6 @@ Synthesise the best final action plan. Return ONLY JSON:
       }));
     }
 
-    /* ── RENDER SCAN OUTPUT ── */
     function renderScanOutput(data) {
       const prods = data.vision_analysis?.products || [];
       const structuredReport = data.structured_report?.length ? data.structured_report : buildStructuredFromVision(prods);
@@ -4207,7 +4035,6 @@ Synthesise the best final action plan. Return ONLY JSON:
       if (a.paused) { a.play(); b.textContent = '⏸'; } else { a.pause(); b.textContent = '▶'; }
     }
 
-    /* ── MOCK DATA (demo when no real shelf) ── */
     function getMockVisionResult() {
       return {
         products: [
@@ -4224,7 +4051,6 @@ Synthesise the best final action plan. Return ONLY JSON:
     function getMockCritic(vision) { return `The Presenter's plan totals ₹1,380 which represents 14-70% of a typical kirana's daily revenue — significant cash flow risk. I recommend phasing: restock only the 2 critical items today (₹840), review in 48 hours before ordering low-stock items. Maggi facing correction can be done free of cost immediately. Seasonal demand must also be considered — biscuit velocity increases 40% in monsoon. The butter order timing should align with the distributor's weekly visit to avoid multiple delivery charges.`; }
     function getMockDecider(vision) { return `FINAL PLAN: Order today — Parle-G (24 units, ₹480) and Amul Butter (6 units, ₹360) as critical stockouts. These two items drive ~35% of daily revenue and must not remain empty. Defer Maggi to your next distributor visit to save delivery costs. Fix Maggi facing immediately — takes 2 minutes, improves sales 15-20%. Total immediate spend: ₹840. Expected revenue recovery: ₹200-300/day.`; }
 
-    /* ── LOGOUT ── */
     function doLogout() {
       STORE = null;
       sessionStorage.removeItem('ss_store');
@@ -4232,7 +4058,6 @@ Synthesise the best final action plan. Return ONLY JSON:
       goLand();
     }
 
-    /* ── HELPERS ── */
     function mkScanCard(s, clickable = false) {
       return `<div class="scan-card" ${clickable ? `onclick="viewScanDetail('${s.id}')"` : 'style="cursor:default"'}>
     ${s.image_url ? `<img class="scan-thumb" src="${s.image_url}" alt="shelf">` : `<div class="scan-ph">📷</div>`}
@@ -4301,10 +4126,8 @@ Synthesise the best final action plan. Return ONLY JSON:
       });
     }
 
-    /* ── PINCODE INPUT MASK ── */
     document.getElementById('r_pi')?.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6); });
 
-    /* ── AUTO-RESTORE SESSION ── */
     (function restore() {
       const s = sessionStorage.getItem('ss_store');
       if (s) try { STORE = JSON.parse(s); } catch { }
