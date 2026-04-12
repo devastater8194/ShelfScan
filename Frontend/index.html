@@ -1,0 +1,4317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShelfScan AI — Intelligent Shelf Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    /* ══════════════════════════════════════════════
+   DESIGN SYSTEM — INDUSTRIAL NEON
+   Aesthetic: Blade Runner x Bloomberg Terminal
+   Unforgettable: Data flows as living organisms
+══════════════════════════════════════════════ */
+    :root {
+      --void: #03070f;
+      --deep: #060d1a;
+      --panel: #0a1527;
+      --surface: #0f1e35;
+      --lift: #162540;
+      --g0: rgba(255, 255, 255, 0);
+      --g1: rgba(255, 255, 255, .04);
+      --g2: rgba(255, 255, 255, .08);
+      --g3: rgba(255, 255, 255, .13);
+      --g4: rgba(255, 255, 255, .22);
+      --acid: #00ff88;
+      --acid2: #00cc66;
+      --cyan: #00d4ff;
+      --orange: #ff6b2b;
+      --gold: #ffd700;
+      --red: #ff3b3b;
+      --pink: #ff2d78;
+      --t0: #ffffff;
+      --t1: #c8dff5;
+      --t2: #6a8caa;
+      --t3: #2e4a66;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+      --disp: 'Outfit', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      /* Inhe :root ke andar last mein paste karein */
+      --border: rgba(255, 255, 255, 0.1);
+      --bg: #0a1527;
+      --surface2: #060d1a;
+      --accent: var(--acid);
+      --text: var(--t0);
+      --text2: var(--t2);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--void);
+      color: var(--t1);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--deep);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--acid);
+      border-radius: 2px;
+    }
+
+    /* ─── REGISTER SECTION (at bottom of landing) ─── */
+    .register-section {
+      padding: 80px 24px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+
+    .register-card {
+      max-width: 680px;
+      margin: 48px auto 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: left;
+    }
+
+    .register-card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .register-card-sub {
+      color: var(--text2);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text2);
+      letter-spacing: 0.03em;
+    }
+
+    .form-input,
+    .form-select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface3);
+    }
+
+    .form-input::placeholder {
+      color: var(--text3);
+    }
+
+    .form-select option {
+      background: var(--surface2);
+    }
+
+    .btn-register {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-register:hover {
+      background: var(--accent2);
+    }
+
+    .btn-register:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+
+    /* ── NOISE + SCAN LINE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .03) 0px, rgba(0, 0, 0, .03) 1px, transparent 1px, transparent 3px);
+      animation: scanlines 8s linear infinite;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9997;
+      pointer-events: none;
+      opacity: .03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes scanlines {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 0 12px;
+      }
+    }
+
+    /* ── CANVAS BACKGROUNDS ── */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── PAGE SYSTEM ── */
+    .page {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    #dash-view {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    #dash-view.active {
+      display: flex;
+      min-height: calc(100vh - 64px);
+      margin-top: 64px;
+    }
+
+    /* ══ NAVBAR ══ */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(3, 7, 15, .7);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 255, 136, .08);
+      transition: border-color .3s;
+    }
+
+    #nav:hover {
+      border-color: rgba(0, 255, 136, .15);
+    }
+
+    .nav-brand {
+      font-family: var(--disp);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--t0);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -.5px;
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--acid), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(0, 255, 136, .3);
+      animation: iconPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(0, 255, 136, .3);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(0, 255, 136, .6), 0 0 80px rgba(0, 255, 136, .2);
+      }
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 2px;
+    }
+
+    .nav-pill {
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--mono);
+      letter-spacing: .05em;
+      color: var(--t2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all .2s;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-pill:hover {
+      color: var(--t0);
+      background: var(--g2);
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ══ BUTTONS ══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 22px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all .2s var(--ease);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      transition: opacity .15s;
+    }
+
+    .btn:hover::after {
+      opacity: .06;
+    }
+
+    .btn:active {
+      transform: scale(.96);
+    }
+
+    .btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-acid {
+      background: var(--acid);
+      color: var(--void);
+      font-weight: 700;
+    }
+
+    .btn-acid:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 255, 136, .35), 0 0 0 1px rgba(0, 255, 136, .5);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--t2);
+      border: 1px solid var(--g3);
+    }
+
+    .btn-ghost:hover {
+      color: var(--t0);
+      border-color: var(--g4);
+    }
+
+    .btn-outline-acid {
+      background: rgba(0, 255, 136, .08);
+      color: var(--acid);
+      border: 1px solid rgba(0, 255, 136, .25);
+    }
+
+    .btn-outline-acid:hover {
+      background: rgba(0, 255, 136, .15);
+      box-shadow: 0 0 20px rgba(0, 255, 136, .2);
+    }
+
+    .btn-outline-cyan {
+      background: rgba(0, 212, 255, .08);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 212, 255, .25);
+    }
+
+    .btn-outline-cyan:hover {
+      background: rgba(0, 212, 255, .15);
+    }
+
+    .btn-lg {
+      padding: 16px 36px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 11px;
+      border-radius: 6px;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* ══ MODAL ══ */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 600;
+      background: rgba(3, 7, 15, .92);
+      backdrop-filter: blur(24px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn .2s ease;
+    }
+
+    .modal-bg.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .modal {
+      background: var(--panel);
+      border: 1px solid var(--g3);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      animation: slideUp .35s var(--ease);
+      box-shadow: 0 40px 120px rgba(0, 0, 0, .8), 0 0 0 1px rgba(0, 255, 136, .05);
+    }
+
+    .modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--acid), transparent);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px) scale(.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .modal-x {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--g1);
+      border: 1px solid var(--g2);
+      color: var(--t2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      font-size: 14px;
+    }
+
+    .modal-x:hover {
+      background: var(--g2);
+      color: var(--t0);
+    }
+
+    .modal-title {
+      font-family: var(--disp);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--t0);
+      margin-bottom: 6px;
+      letter-spacing: -.5px;
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: var(--t2);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* ══ FORMS ══ */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--t2);
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--deep);
+      border: 1px solid var(--g2);
+      border-radius: 8px;
+      color: var(--t0);
+      font-family: var(--sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      /* -webkit-appearance:none; */
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8caa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .field select option {
+      background: var(--panel);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--acid);
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, .1);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--t3);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.6;
+    }
+
+    .frow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .fdiv {
+      height: 1px;
+      background: var(--g2);
+      margin: 18px 0;
+    }
+
+    .fmsg {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 12px;
+      display: none;
+      font-family: var(--mono);
+    }
+
+    .fmsg.ok {
+      display: block;
+      background: rgba(0, 255, 136, .08);
+      border: 1px solid rgba(0, 255, 136, .25);
+      color: var(--acid);
+    }
+
+    .fmsg.err {
+      display: block;
+      background: rgba(255, 59, 59, .08);
+      border: 1px solid rgba(255, 59, 59, .25);
+      color: var(--red);
+    }
+
+    /* ══════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 120px 32px 80px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0, 255, 136, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, .04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 20%, transparent 75%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      width: 100%;
+      display: grid;
+      gap: 0;
+      text-align: center;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(0, 255, 136, .07);
+      border: 1px solid rgba(0, 255, 136, .2);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--acid);
+      margin: 0 auto 36px;
+      width: fit-content;
+      animation: chipIn .8s var(--ease) .3s both;
+    }
+
+    .chip-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--acid);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 6px var(--acid);
+      }
+
+      50% {
+        opacity: .2;
+        box-shadow: none;
+      }
+    }
+
+    @keyframes chipIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .hero-title {
+      font-family: var(--disp);
+      font-size: clamp(52px, 9vw, 128px);
+      font-weight: 800;
+      line-height: .88;
+      letter-spacing: -.04em;
+      color: var(--t0);
+      animation: titleIn .9s var(--ease) .45s both;
+    }
+
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(100deg, var(--acid) 0%, var(--cyan) 50%, var(--acid) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleIn .9s var(--ease) .55s both, shimmer 4s linear 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0% center
+      }
+
+      100% {
+        background-position: 200% center
+      }
+    }
+
+    @keyframes titleIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--t2);
+      max-width: 560px;
+      margin: 28px auto 48px;
+      animation: subIn .8s var(--ease) .7s both;
+    }
+
+    .hero-sub b {
+      color: var(--t1);
+      font-weight: 500;
+    }
+
+    @keyframes subIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: subIn .8s var(--ease) .85s both;
+    }
+
+    /* Live metrics strip */
+    .hero-metrics {
+      display: flex;
+      gap: 0;
+      margin: 56px auto 0;
+      border: 1px solid var(--g2);
+      border-radius: 12px;
+      overflow: hidden;
+      width: fit-content;
+      animation: subIn .8s var(--ease) 1s both;
+      background: var(--deep);
+    }
+
+    .hm {
+      padding: 16px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      border-right: 1px solid var(--g2);
+      position: relative;
+      transition: background .25s;
+    }
+
+    .hm:last-child {
+      border-right: none;
+    }
+
+    .hm:hover {
+      background: var(--g1);
+    }
+
+    .hm-val {
+      font-family: var(--disp);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--t0);
+      line-height: 1;
+    }
+
+    .hm-val.c-acid {
+      color: var(--acid);
+    }
+
+    .hm-val.c-cyan {
+      color: var(--cyan);
+    }
+
+    .hm-val.c-orange {
+      color: var(--orange);
+    }
+
+    .hm-val.c-gold {
+      color: var(--gold);
+    }
+
+    .hm-lbl {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--t3);
+    }
+
+    /* ══ MARQUEE ══ */
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(0, 255, 136, .06);
+      border-bottom: 1px solid rgba(0, 255, 136, .06);
+      position: relative;
+      z-index: 1;
+    }
+
+    .marquee-inner {
+      display: flex;
+      width: max-content;
+      animation: scroll 25s linear infinite;
+    }
+
+    .marquee-inner:hover {
+      animation-play-state: paused;
+    }
+
+    .mitem {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--t3);
+      border-right: 1px solid var(--g2);
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: color .2s;
+    }
+
+    .mitem:hover {
+      color: var(--t2);
+    }
+
+    .mitem-dot {
+      color: var(--acid);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    @keyframes scroll {
+      0% {
+        transform: translateX(0)
+      }
+
+      100% {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* ══ FEATURES BENTO ══ */
+    #features {
+      padding: 100px 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .features-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--acid);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--acid);
+    }
+
+    .section-h {
+      font-family: var(--disp);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      color: var(--t0);
+      letter-spacing: -.03em;
+      margin-bottom: 56px;
+      line-height: 1;
+    }
+
+    .section-h em {
+      font-style: normal;
+      color: var(--acid);
+    }
+
+    /* BENTO GRID */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 12px;
+    }
+
+    .bc {
+      background: var(--panel);
+      border: 1px solid var(--g2);
+      border-radius: 16px;
+      padding: 28px;
+      overflow: hidden;
+      position: relative;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+
+    .bc:hover {
+      border-color: var(--g3);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+    }
+
+    .bc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 136, .05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .bc:hover::before {
+      opacity: 1;
+    }
+
+    /* Grid placement */
+    .bc.span-5 {
+      grid-column: span 5;
+    }
+
+    .bc.span-7 {
+      grid-column: span 7;
+    }
+
+    .bc.span-4 {
+      grid-column: span 4;
+    }
+
+    .bc.span-8 {
+      grid-column: span 8;
+    }
+
+    .bc.span-6 {
+      grid-column: span 6;
+    }
+
+    .bc.span-3 {
+      grid-column: span 3;
+    }
+
+    .bc.span-9 {
+      grid-column: span 9;
+    }
+
+    .bc.span-12 {
+      grid-column: span 12;
+    }
+
+    .bc-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .bc-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--acid);
+      margin-bottom: 10px;
+    }
+
+    .bc-title {
+      font-family: var(--disp);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--t0);
+      margin-bottom: 10px;
+      letter-spacing: -.3px;
+    }
+
+    .bc-desc {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--t2);
+    }
+
+    .bc-big .bc-title {
+      font-size: 32px;
+    }
+
+    .bc-big .bc-desc {
+      font-size: 15px;
+    }
+
+    .bc-accent {
+      border-color: rgba(0, 255, 136, .2) !important;
+    }
+
+    .bc-accent::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--acid), transparent);
+    }
+
+    .bc-stat {
+      font-family: var(--disp);
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .bc-stat.acid {
+      color: var(--acid);
+    }
+
+    .bc-stat.cyan {
+      color: var(--cyan);
+    }
+
+    .bc-stat.orange {
+      color: var(--orange);
+    }
+
+    /* AI Debate Visual */
+    .debate-visual {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dv-agent {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--deep);
+      border: 1px solid var(--g2);
+      transition: border-color .3s;
+    }
+
+    .dv-agent:hover {
+      border-color: var(--g3);
+    }
+
+    .dv-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dv-dot.gemini {
+      background: #4285f4;
+      box-shadow: 0 0 8px #4285f4;
+    }
+
+    .dv-dot.gpt {
+      background: #10a37f;
+      box-shadow: 0 0 8px #10a37f;
+    }
+
+    .dv-dot.groq {
+      background: var(--orange);
+      box-shadow: 0 0 8px var(--orange);
+    }
+
+    .dv-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--t1);
+      flex: 1;
+    }
+
+    .dv-role {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--t3);
+    }
+
+    .dv-bar {
+      flex: 1;
+      height: 3px;
+      background: var(--g2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .dv-fill {
+      height: 100%;
+      border-radius: 2px;
+      animation: barGrow 2s var(--ease) infinite alternate;
+    }
+
+    .dv-fill.gemini {
+      background: #4285f4;
+    }
+
+    .dv-fill.gpt {
+      background: #10a37f;
+    }
+
+    .dv-fill.groq {
+      background: var(--orange);
+    }
+
+    @keyframes barGrow {
+      0% {
+        width: 40%
+      }
+
+      100% {
+        width: 90%
+      }
+    }
+
+    /* ══ REGISTER SECTION ══ */
+    /* ============================================================
+   DESIGN SYSTEM UPDATES & MISSING VARIABLES (Crucial)
+   ============================================================ */
+    :root {
+      /* Existing vars (retaining) */
+      --void: #03070f;
+      --deep: #060d1a;
+      --panel: #0a1527;
+      --surface: #0f1e35;
+      --acid: #00ff88;
+      --cyan: #00d4ff;
+      --t0: #ffffff;
+      --t1: #c8dff5;
+      --t2: #6a8caa;
+      --t3: #2e4a66;
+      --disp: 'Outfit', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+
+      /* MISSING VARIABLES ADDED (Based on your schema) */
+      --g2: rgba(255, 255, 255, 0.08);
+      /* Border color */
+      --surface2: #060d1a;
+      /* Input background */
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============================================================
+   REGISTER SECTION (Two-Column Layout like Image 1)
+   /* ══ REGISTER SECTION (FINAL FIX) ══ */
+    /* ══ REGISTER SECTION (FINAL CLEAN & CENTERED) ══ */
+    /* ══ REGISTER SECTION (FINAL CLEAN & CENTERED) ══ */
+    #register {
+      padding: 40px 32px 0 32px;
+      background: var(--void);
+      min-height: auto;
+      display: block;
+    }
+
+    .reg-inner {
+      display: block !important;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-bottom: 60px;
+    }
+
+    /* Hide the left column with feature bullets */
+    .reg-inner>.rl {
+      display: none !important;
+    }
+
+    /* Also hide the section-tag and h2 above the form */
+    #register .section-tag,
+    #register .section-h {
+      display: none !important;
+    }
+
+    /* Make the form side take full width */
+    .reg-inner>.rr {
+      width: 100%;
+    }
+
+    .reg-form {
+      width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--g2);
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .reg-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--acid), var(--cyan));
+    }
+
+    .footer {
+      margin-top: 0 !important;
+      border-top: 1px solid var(--g2);
+    }
+
+    /* Glowing top border like Image 1 */
+    /* .reg-form-side::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--acid), var(--cyan));
+    } */
+
+    .form-header {
+      margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+      font-family: var(--disp);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--t0);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .form-header p {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--t3);
+    }
+
+    /* Form Fields Styling (Same as dashboard) */
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-field label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--t2);
+      margin-bottom: 8px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--g2);
+      border-radius: 8px;
+      color: var(--t0);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      border-color: var(--acid);
+      box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+    }
+
+    .btn-activate {
+      width: 100%;
+      padding: 14px;
+      background: var(--acid);
+      color: var(--void);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--sans);
+    }
+
+    .btn-activate:hover {
+      background: var(--acid2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    }
+
+    /* Responsive (Mobile) */
+    @media (max-width: 992px) {
+      .reg-container {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .reg-info-side h1 {
+        font-size: 36px;
+      }
+
+      .reg-form-side {
+        padding: 32px;
+      }
+    }
+
+    /* ============================================================
+   FOOTER (Two-Column, Navigation on Right like Image 4)
+   ============================================================ */
+    .footer {
+      background: var(--deep);
+      border-top: 1px solid var(--g2);
+      padding: 60px 32px 30px;
+      color: var(--t2);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      /* Image 4 design: Main info + Nav */
+      gap: 60px;
+      margin-bottom: 40px;
+    }
+
+    /* Left side: Logo & Credits */
+    .footer-main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: var(--disp);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--t0);
+    }
+
+    .footer-tagline {
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .footer-built-by {
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .footer-tech {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--t3);
+      margin-top: 4px;
+    }
+
+    /* Right side: Navigation */
+    .footer-nav-section h4 {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 16px;
+    }
+
+    .footer-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-nav-links a {
+      color: var(--t2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-nav-links a:hover {
+      color: var(--acid);
+    }
+
+    /* Bottom Bar: Copyright & Tech Links */
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--g2);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3);
+    }
+
+    .footer-tech-stack {
+      display: flex;
+      gap: 16px;
+    }
+
+    /* Responsive Footer */
+    @media (max-width: 768px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .footer-tech-stack {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+
+
+    /* #register{padding:100px 32px;position:relative;z-index:1;background:linear-gradient(to bottom,var(--void),var(--deep),var(--void));}
+.reg-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.reg-perks{margin-top:32px;display:flex;flex-direction:column;gap:10px;}
+.rperk{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:10px;background:var(--panel);border:1px solid var(--g2);transition:all .25s;}
+.rperk:hover{border-color:rgba(255, 0, 0, 0.2);background:var(--surface);}
+.rperk-ic{font-size:20px;flex-shrink:0;margin-top:2px;}
+.rperk-t{font-size:14px;font-weight:600;color:var(--t0);margin-bottom:3px;}
+.rperk-d{font-size:13px;color:var(--t2);line-height:1.5;}
+.reg-form{background:var(--panel);border:1px solid var(--g2);border-radius:16px;padding:36px;position:relative;overflow:hidden;}
+.reg-form::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--acid),var(--cyan));}
+.reg-form-title{font-family:var(--disp);font-size:28px;font-weight:800;color:var(--t0);margin-bottom:4px;letter-spacing:-.5px;}
+.reg-form-sub{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--t3);margin-bottom:28px;}
+
+/* ══ FOOTER ══ */
+    /* .footer{position:relative;z-index:1;background:var(--deep);border-top:1px solid var(--g2);padding:48px 32px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;gap:40px;justify-content:space-between;flex-wrap:wrap;align-items:flex-start;}
+.footer-logo{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--t0);margin-bottom:8px;}
+.footer-tagline{font-size:13px;color:var(--t2);line-height:1.6;max-width:260px;margin-bottom:14px;}
+.footer-credit{font-family:var(--mono);font-size:10px;color:var(--t3);line-height:1.8;}
+.footer-links{display:flex;gap:6px;flex-wrap:wrap;}
+.footer-links a{padding:7px 13px;border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--t2);text-decoration:none;border:1px solid var(--g2);background:var(--g1);transition:all .2s;}
+.footer-links a:hover{color:var(--acid);border-color:rgba(255, 0, 0, 0.2);}
+.footer-bottom{margin-top:32px;padding-top:20px;border-top:1px solid var(--g2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-family:var(--mono);font-size:10px;color:var(--t3);} */
+
+    /* ══ REVEAL ANIMATIONS ══ */
+    /* .rv{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.rl{opacity:0;transform:translateX(-28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.rr{opacity:0;transform:translateX(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.rs{opacity:0;transform:scale(.93);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+.rv.up,.rl.up,.rr.up,.rs.up{opacity:1;transform:none;} */
+    */
+
+    /* ══════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════ */
+    .dash-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-right: 1px solid var(--g2);
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 16px 10px;
+    }
+
+    .sb-store {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--g2);
+      margin-bottom: 18px;
+    }
+
+    .sb-name {
+      font-family: var(--disp);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--t0);
+      margin-bottom: 2px;
+    }
+
+    .sb-phone {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3);
+      margin-bottom: 8px;
+    }
+
+    .sb-live {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--acid);
+    }
+
+    .sb-live::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--acid);
+      animation: blink 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .sb-sec {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--t3);
+      padding: 0 10px;
+      margin: 14px 0 5px;
+    }
+
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--t2);
+      cursor: pointer;
+      transition: all .2s;
+      border: 1px solid transparent;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: var(--sans);
+    }
+
+    .sb-item:hover {
+      color: var(--t0);
+      background: var(--g1);
+      border-color: var(--g2);
+    }
+
+    .sb-item.on {
+      color: var(--acid);
+      background: rgba(0, 255, 136, .06);
+      border-color: rgba(0, 255, 136, .14);
+    }
+
+    .sb-item.danger:hover {
+      color: var(--red);
+      background: rgba(255, 59, 59, .06);
+    }
+
+    .sb-badge {
+      margin-left: auto;
+      background: var(--acid);
+      color: var(--void);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 100px;
+      font-family: var(--mono);
+    }
+
+    .dash-main {
+      flex: 1;
+      min-width: 0;
+      padding: 24px 28px;
+      overflow-y: auto;
+      max-height: calc(100vh - 64px);
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .dash-title {
+      font-family: var(--disp);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--t0);
+      letter-spacing: -.5px;
+    }
+
+    .dash-ts {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3);
+    }
+
+    /* TAB SYSTEM */
+    .dtab {
+      display: none;
+    }
+
+    .dtab.on {
+      display: block;
+      animation: tabIn .3s var(--ease);
+    }
+
+    @keyframes tabIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--g2);
+      border-radius: 10px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: all .25s;
+      cursor: default;
+    }
+
+    .kpi:hover {
+      border-color: var(--g3);
+      transform: translateY(-2px);
+    }
+
+    .kpi::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+    }
+
+    .kpi.k-acid::after {
+      background: var(--acid);
+    }
+
+    .kpi.k-cyan::after {
+      background: var(--cyan);
+    }
+
+    .kpi.k-orange::after {
+      background: var(--orange);
+    }
+
+    .kpi.k-white::after {
+      background: var(--t2);
+    }
+
+    .kpi-val {
+      font-family: var(--disp);
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .kpi.k-acid .kpi-val {
+      color: var(--acid);
+    }
+
+    .kpi.k-cyan .kpi-val {
+      color: var(--cyan);
+    }
+
+    .kpi.k-orange .kpi-val {
+      color: var(--orange);
+    }
+
+    .kpi.k-white .kpi-val {
+      color: var(--t0);
+    }
+
+    .kpi-lbl {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--t3);
+    }
+
+    .kpi-delta {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 4px;
+    }
+
+    .kpi-delta.up {
+      background: rgba(0, 255, 136, .1);
+      color: var(--acid);
+    }
+
+    .kpi-delta.dn {
+      background: rgba(255, 59, 59, .1);
+      color: var(--red);
+    }
+
+    /* PANELS */
+    .panel {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--g2);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .panel-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--t3);
+    }
+
+    .panel-action {
+      font-size: 11px;
+      color: var(--acid);
+      cursor: pointer;
+      font-family: var(--mono);
+    }
+
+    .panel-chart {
+      position: relative;
+      width: 100%;
+      min-height: 210px;
+      max-height: 280px;
+      overflow: hidden;
+    }
+
+    #scanChart {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .g21 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .g3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* ALERTS */
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .alert-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      border-left: 2px solid;
+    }
+
+    .alert-row.crit {
+      background: rgba(255, 59, 59, .05);
+      border-color: var(--red);
+      color: #ff9090;
+    }
+
+    .alert-row.warn {
+      background: rgba(255, 107, 43, .05);
+      border-color: var(--orange);
+      color: #ffb380;
+    }
+
+    .alert-row.info {
+      background: rgba(0, 212, 255, .05);
+      border-color: var(--cyan);
+      color: #80e8ff;
+    }
+
+    .alert-row.ok {
+      background: rgba(0, 255, 136, .04);
+      border-color: var(--acid);
+      color: var(--acid);
+    }
+
+    /* TABLE */
+    .tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .tbl th {
+      padding: 8px 12px;
+      text-align: left;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--t3);
+      border-bottom: 1px solid var(--g2);
+    }
+
+    .tbl td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, .025);
+      color: var(--t2);
+    }
+
+    .tbl tr:hover td {
+      background: var(--g1);
+      color: var(--t1);
+    }
+
+    .tbl tr:last-child td {
+      border-bottom: none;
+    }
+
+    .stock-pill {
+      padding: 3px 8px;
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .stock-pill.critical {
+      background: rgba(255, 59, 59, .12);
+      color: var(--red);
+      border: 1px solid rgba(255, 59, 59, .2);
+    }
+
+    .stock-pill.low {
+      background: rgba(255, 107, 43, .12);
+      color: var(--orange);
+      border: 1px solid rgba(255, 107, 43, .2);
+    }
+
+    .stock-pill.ok {
+      background: rgba(0, 255, 136, .1);
+      color: var(--acid);
+      border: 1px solid rgba(0, 255, 136, .2);
+    }
+
+    .stock-pill.overstocked {
+      background: rgba(0, 212, 255, .1);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 212, 255, .2);
+    }
+
+    /* SCAN CARDS */
+    .scan-card {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--g2);
+      cursor: pointer;
+      transition: all .25s;
+      margin-bottom: 8px;
+    }
+
+    .scan-card:hover {
+      border-color: var(--g3);
+      background: var(--surface);
+      transform: translateX(4px);
+    }
+
+    .scan-thumb {
+      width: 80px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--g2);
+    }
+
+    .scan-ph {
+      width: 80px;
+      height: 58px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--g2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .scan-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--t0);
+      margin-bottom: 3px;
+    }
+
+    .scan-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3);
+      line-height: 1.8;
+    }
+
+    .status-badge {
+      padding: 4px 9px;
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      white-space: nowrap;
+    }
+
+    .status-badge.completed {
+      background: rgba(0, 255, 136, .1);
+      color: var(--acid);
+      border: 1px solid rgba(0, 255, 136, .2);
+    }
+
+    .status-badge.processing {
+      background: rgba(0, 212, 255, .1);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 212, 255, .2);
+    }
+
+    .status-badge.failed {
+      background: rgba(255, 59, 59, .1);
+      color: var(--red);
+      border: 1px solid rgba(255, 59, 59, .2);
+    }
+
+    /* UPLOAD ZONE */
+    .upload-zone {
+      border: 2px dashed var(--g3);
+      border-radius: 16px;
+      padding: 56px 36px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .3s;
+      position: relative;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag {
+      border-color: rgba(0, 255, 136, .4);
+      background: rgba(0, 255, 136, .03);
+    }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .uz-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .uz-title {
+      font-family: var(--disp);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--t0);
+      letter-spacing: -.5px;
+      margin-bottom: 8px;
+    }
+
+    .uz-hint {
+      font-size: 13px;
+      color: var(--t3);
+    }
+
+    /* PIPELINE */
+    .pipeline {
+      display: flex;
+      gap: 2px;
+      margin: 18px 0;
+    }
+
+    .pip {
+      flex: 1;
+      padding: 10px 6px;
+      text-align: center;
+      background: var(--panel);
+      border: 1px solid var(--g2);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--t3);
+      transition: all .35s var(--ease);
+    }
+
+    .pip:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .pip:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .pip.active {
+      background: rgba(0, 212, 255, .08);
+      border-color: rgba(0, 212, 255, .3);
+      color: var(--cyan);
+    }
+
+    .pip.done {
+      background: rgba(0, 255, 136, .07);
+      border-color: rgba(0, 255, 136, .2);
+      color: var(--acid);
+    }
+
+    .pip.done::before {
+      content: '✓ ';
+    }
+
+    /* DEBATE */
+    .debate-card {
+      padding: 16px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid var(--g2);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 3px solid;
+    }
+
+    .debate-card.presenter {
+      border-left-color: #4285f4;
+    }
+
+    .debate-card.critic {
+      border-left-color: var(--orange);
+    }
+
+    .debate-card.decider {
+      border-left-color: var(--acid);
+    }
+
+    .debate-agent {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .debate-agent-name {
+      font-family: var(--disp);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--t0);
+    }
+
+    .debate-agent-model {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .debate-agent-model.gemini {
+      background: rgba(66, 133, 244, .12);
+      color: #7cb7ff;
+    }
+
+    .debate-agent-model.gpt {
+      background: rgba(16, 163, 127, .12);
+      color: #5ecca5;
+    }
+
+    .debate-agent-model.groq {
+      background: rgba(255, 107, 43, .12);
+      color: var(--orange);
+    }
+
+    .debate-text {
+      font-size: 13px;
+      color: var(--t2);
+      line-height: 1.7;
+    }
+
+    .debate-confidence {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .conf-bar {
+      flex: 1;
+      height: 2px;
+      background: var(--g2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .conf-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--acid), var(--cyan));
+    }
+
+    .conf-val {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--t3);
+    }
+
+    /* VOICE PLAYER */
+    .voice-player {
+      padding: 18px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid rgba(0, 255, 136, .12);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .vp-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--acid);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: all .2s;
+      color: var(--void);
+    }
+
+    .vp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(0, 255, 136, .35);
+    }
+
+    .vp-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .vp-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--t0);
+      margin-bottom: 4px;
+    }
+
+    .vp-text {
+      font-size: 12px;
+      color: var(--t2);
+      line-height: 1.65;
+    }
+
+    .vp-waveform {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 24px;
+      margin-top: 8px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: var(--acid);
+      opacity: .5;
+      animation: wave 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes wave {
+      0% {
+        height: 4px;
+        opacity: .3
+      }
+
+      100% {
+        height: 20px;
+        opacity: .9
+      }
+    }
+
+    /* NEIGHBOR */
+    .comp-card {
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: var(--panel);
+      border: 1px solid var(--g2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      transition: border-color .25s;
+    }
+
+    .comp-card:hover {
+      border-color: var(--g3);
+    }
+
+    .comp-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--t0);
+      margin-bottom: 3px;
+    }
+
+    .comp-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3);
+    }
+
+    .comp-score {
+      font-family: var(--disp);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .comp-score.g {
+      color: var(--acid);
+    }
+
+    .comp-score.a {
+      color: var(--orange);
+    }
+
+    /* EMPTY / LOADER */
+    .empty {
+      padding: 48px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .empty-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--t2);
+      margin-bottom: 4px;
+      font-family: var(--disp);
+    }
+
+    .empty-sub {
+      font-size: 12px;
+      color: var(--t3);
+      font-family: var(--mono);
+    }
+
+    .loader-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px;
+      color: var(--t3);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .spin {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--g3);
+      border-top-color: var(--acid);
+      border-radius: 50%;
+      animation: sp .7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes sp {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* AI DEBATE LIVE STREAM */
+    .debate-stream {
+      background: var(--deep);
+      border: 1px solid rgba(0, 255, 136, .1);
+      border-radius: 10px;
+      padding: 18px;
+      margin: 14px 0;
+      min-height: 80px;
+    }
+
+    .debate-stream-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--acid);
+    }
+
+    .debate-stream-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--acid);
+      animation: blink 1s infinite;
+    }
+
+    .token-stream {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--t2);
+      line-height: 1.8;
+      min-height: 40px;
+    }
+
+    .token {
+      opacity: 0;
+      animation: tokenIn .1s ease forwards;
+    }
+
+    @keyframes tokenIn {
+      to {
+        opacity: 1
+      }
+    }
+
+    /* REAL-TIME HEALTH GAUGE */
+    .health-gauge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: var(--panel);
+      border: 1px solid var(--g2);
+      border-radius: 10px;
+    }
+
+    .gauge-circle {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 12px;
+    }
+
+    .gauge-svg {
+      transform: rotate(-90deg);
+    }
+
+    .gauge-bg {
+      fill: none;
+      stroke: var(--g2);
+      stroke-width: 10;
+    }
+
+    .gauge-fill {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.5s var(--ease), stroke .5s;
+    }
+
+    .gauge-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--disp);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--t0);
+    }
+
+    .gauge-val span {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--t3);
+      font-weight: 400;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .g21,
+      .g2,
+      .g3 {
+        grid-template-columns: 1fr;
+      }
+
+      .bento .bc {
+        grid-column: span 12 !important;
+      }
+
+      .reg-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:768px) {
+      #nav {
+        padding: 0 16px;
+      }
+
+      .nav-center {
+        display: none;
+      }
+
+      .hero-metrics .hm {
+        padding: 12px 16px;
+      }
+
+      .hm-val {
+        font-size: 24px;
+      }
+
+      .hero-title {
+        font-size: clamp(40px, 10vw, 80px);
+      }
+
+      .dash-sidebar {
+        display: none;
+      }
+
+      .dash-main {
+        padding: 16px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .scan-card {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .scan-card>:last-child {
+        display: none;
+      }
+
+      .reg-inner {
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="hyperspeed-root"></div>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="nav">
+    <a class="nav-brand" href="#" onclick="goLand();return false;">
+
+      <span style="color:var(--acid)"></span>
+    </a>
+    <div class="nav-center">
+      <button class="nav-pill" onclick="goLand();scrollToSection('features')">Features</button>
+      <button class="nav-pill" onclick="goLand();scrollToSection('register')">Register</button>
+      <button class="nav-pill" onclick="openLogin()">Login</button>
+    </div>
+    <div class="nav-right">
+      <button class="btn btn-ghost btn-sm" onclick="openLogin()">Sign In</button>
+      <button class="btn btn-acid btn-sm" onclick="goLand();scrollToSection('register')">Get Started →</button>
+    </div>
+  </nav>
+
+  <!-- ═══ LOGIN MODAL ═══ -->
+  <div class="modal-bg" id="loginModal" onclick="if(event.target===this)closeLogin()">
+    <div class="modal">
+      <button class="modal-x" onclick="closeLogin()">✕</button>
+      <div class="modal-title">Access Dashboard</div>
+      <div class="modal-sub">Enter your registered WhatsApp number to continue.</div>
+      <div class="field"><label>WhatsApp Number</label><input id="lphone" type="tel" placeholder="+91 98765 43210">
+      </div>
+      <button class="btn btn-acid btn-full btn-lg" onclick="doLogin()" id="loginBtn">Access Dashboard →</button>
+      <div class="fmsg" id="loginMsg"></div>
+      <p style="margin-top:18px;text-align:center;font-size:13px;color:var(--t3);font-family:var(--mono);">
+        New? <a href="#" style="color:var(--acid);text-decoration:none;"
+          onclick="closeLogin();goLand();setTimeout(()=>scrollToSection('register'),200)">Register your store</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════ LANDING ═══════════ -->
+  <div id="landing" class="page active">
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-content">
+        <div class="hero-chip">
+          <div class="chip-dot"></div>Shelf Intelligence · India's 12M Kirana Stores
+        </div>
+        <h1 class="hero-title" id="split-title-root">
+          <span style="display:block">SHELF</span>
+          <span class="line2" style="display:block">Scan AI</span>
+          <span style="display:block"></span>
+        </h1>
+        <p class="hero-sub" id="split-sub-root">WhatsApp a shelf photo. Our <b>3-agent AI debate system</b> — Gemini
+          Vision, GPT-4o & Groq —
+          delivers a <b>Hindi voice restock plan</b> in 30 seconds.</p>
+        <div class="hero-btns">
+          <button class="btn btn-acid btn-lg" onclick="openLogin()">⚡ Launch Dashboard</button>
+          <button class="btn btn-ghost btn-lg" onclick="scrollToSection('features')">Explore Features ↓</button>
+        </div>
+        <div class="hero-metrics">
+          <div class="hm">
+            <div class="hm-val c-acid"><span class="cnt" data-t="12">0</span>M</div>
+            <div class="hm-lbl">Kirana Stores</div>
+          </div>
+          <div class="hm">
+            <div class="hm-val c-cyan"><span class="cnt" data-t="30">0</span>s</div>
+            <div class="hm-lbl">AI Response</div>
+          </div>
+          <div class="hm">
+            <div class="hm-val c-orange"><span class="cnt" data-t="3">0</span></div>
+            <div class="hm-lbl">AI Agents</div>
+          </div>
+          <div class="hm">
+            <div class="hm-val c-gold">₹<span class="cnt" data-t="45">0</span>L</div>
+            <div class="hm-lbl">Market (Cr)</div>
+          </div>
+          <div class="hm">
+            <div class="hm-val" style="color:var(--pink)"><span class="cnt" data-t="99">0</span>%</div>
+            <div class="hm-lbl">Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee">
+      <div class="marquee-inner" id="mqi"></div>
+    </div>
+
+    <!-- FEATURES BENTO -->
+    <section id="features" style="padding:100px 32px;position:relative;z-index:1;">
+      <div style="max-width:1280px;margin:0 auto;">
+        <div class="rv">
+          <div class="section-tag">Core Platform</div>
+          <h2 class="section-h">Everything Your<br>Kirana Needs, <em>Now</em></h2>
+        </div>
+        <div id="magic-bento-root"></div>
+      </div>
+    </section>
+
+    <!-- BIG CTA SECTION -->
+    <section id="cta" class="rv"
+      style="padding: 100px 32px; text-align: center; background: linear-gradient(to bottom, transparent, var(--deep));">
+      <div class="hero-content" style="max-width: 800px; margin: 0 auto;">
+        <h2 class="hero-title" style="font-size: clamp(40px, 6vw, 80px); margin-bottom: 20px;">Ready to <span
+            style="color:var(--acid)">Automate</span> Your Kirana?</h2>
+        <p class="hero-sub" style="margin-bottom: 40px;">Join thousands of smart store owners who have already
+          transformed their businesses with ShelfScan AI.</p>
+        <button class="btn btn-acid btn-lg" onclick="scrollToSection('register')"
+          style="box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);">Register Your Store — Instant Activation</button>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee rv" style="margin-bottom: 60px;">
+      <div class="marquee-inner" id="mqi"></div>
+    </div>
+
+    <!-- REGISTER -->
+    <section id="register"
+      style="padding:100px 32px;position:relative;z-index:1;background:linear-gradient(to bottom,var(--void),var(--deep) 50%,var(--void));">
+      <div style="max-width:1100px;margin:0 auto;">
+        <div class="rv" style="margin-bottom:0;">
+          <div class="section-tag">Join the Platform</div>
+          <h2 class="section-h">Register Your Store</h2>
+        </div>
+        <div class="reg-inner">
+          <div class="rl">
+            <p style="font-size:16px;line-height:1.8;color:var(--t2);margin-bottom:28px;">Connect your kirana to
+              ShelfScan AI's intelligence network. Start receiving AI-powered Hindi voice restock recommendations in
+              minutes.</p>
+            <div class="reg-perks">
+              <div class="rperk">
+                <div class="rperk-ic">📱</div>
+                <div>
+                  <div class="rperk-t">Instant WhatsApp Activation</div>
+                  <div class="rperk-d">Connected to AI pipeline immediately after registration.</div>
+                </div>
+              </div>
+              <div class="rperk">
+                <div class="rperk-ic">🎙️</div>
+                <div>
+                  <div class="rperk-t">Hindi Voice Recommendations</div>
+                  <div class="rperk-d">Restock advice in your language. No literacy barrier.</div>
+                </div>
+              </div>
+              <div class="rperk">
+                <div class="rperk-ic">📊</div>
+                <div>
+                  <div class="rperk-t">30-Day Free Dashboard</div>
+                  <div class="rperk-d">Full shelf analytics, scan history, area demand — free.</div>
+                </div>
+              </div>
+              <div class="rperk">
+                <div class="rperk-ic">🏘️</div>
+                <div>
+                  <div class="rperk-t">Neighbourhood Intelligence</div>
+                  <div class="rperk-d">See competitor shelf health and demand surges in your pincode.</div>
+                </div>
+              </div>
+              <div class="rperk">
+                <div class="rperk-ic">⚖️</div>
+                <div>
+                  <div class="rperk-t">3-Agent AI Debate</div>
+                  <div class="rperk-d">Gemini + GPT-4o + Groq fight over every recommendation so you get the best one.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rr">
+            <div class="reg-form">
+              <div class="reg-form-title">Store Registration</div>
+              <div class="reg-form-sub">// SECURED · SUPABASE POSTGRESQL · INSTANT ACTIVATION</div>
+              <form id="regForm" onsubmit="doRegister(event)">
+                <div class="frow">
+                  <div class="field"><label>Owner Name *</label><input id="r_own" type="text" placeholder="Ramesh Kumar"
+                      required></div>
+                  <div class="field"><label>WhatsApp *</label><input id="r_ph" type="tel" placeholder="+91 98765 43210"
+                      required></div>
+                </div>
+                <div class="field"><label>Store Name *</label><input id="r_st" type="text"
+                    placeholder="Kumar General Store" required></div>
+                <div class="frow">
+                  <div class="field"><label>City *</label><input id="r_cy" type="text" placeholder="Delhi" required>
+                  </div>
+                  <div class="field"><label>Pincode *</label><input id="r_pi" type="text" placeholder="110024"
+                      maxlength="6" required></div>
+                </div>
+                <div class="field"><label>Address</label><input id="r_ad" type="text"
+                    placeholder="Shop 12, Main Market, Lajpat Nagar"></div>
+                <div class="fdiv"></div>
+                <div class="frow">
+                  <div class="field"><label>Store Type *</label><select id="r_ty" required>
+                      <option value="" disabled selected>Select</option>
+                      <option value="kirana">Kirana / General Store</option>
+                      <option value="grocery">Grocery Store</option>
+                      <option value="supermarket">Supermarket</option>
+                      <option value="pharmacy">Medical / Pharmacy</option>
+                      <option value="other">Other</option>
+                    </select></div>
+                  <div class="field"><label>Monthly Sales</label><select id="r_vo">
+                      <option value="">Select range</option>
+                      <option value="below_50k">Below ₹50,000</option>
+                      <option value="50k_2l">₹50K – ₹2 Lakh</option>
+                      <option value="2l_5l">₹2L – ₹5 Lakh</option>
+                      <option value="above_5l">Above ₹5 Lakh</option>
+                    </select></div>
+                </div>
+                <div class="frow">
+                  <div class="field"><label>No. of Shelves</label><input id="r_sh" type="number" placeholder="8"
+                      min="1"></div>
+                  <div class="field"><label>Language</label><select id="r_lg">
+                      <option value="hindi">Hindi</option>
+                      <option value="hinglish">Hinglish</option>
+                      <option value="english">English</option>
+                      <option value="marathi">Marathi</option>
+                      <option value="tamil">Tamil</option>
+                    </select></div>
+                </div>
+                <div class="field"><label>Product Categories</label><textarea id="r_ca"
+                    placeholder="Biscuits, Beverages, Dairy, Staples, Snacks..."></textarea></div>
+                <div class="fdiv"></div>
+                <div class="frow">
+                  <div class="field"><label>GST (Optional)</label><input id="r_gs" type="text"
+                      placeholder="27AAAAA0000A1Z5" style="text-transform:uppercase"></div>
+                  <div class="field"><label>Referral Code</label><input id="r_rf" type="text" placeholder="SHELF50">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-acid btn-full btn-lg" id="regBtn">Activate ShelfScan AI →</button>
+                <div class="fmsg" id="regMsg"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">ShelfScan<span style="color:var(--acid)">AI</span></div>
+          <div class="footer-tagline">Shelf intelligence for India's 12 million kirana stores. WhatsApp-native,
+            Hindi-first, AI-powered.</div>
+          <div class="footer-credit">Built by Team Technovator · Sarthak Bhardwaj<br>AMD Slingshot 2024 · Supabase ·
+            Gemini · GPT-4o · Groq · ElevenLabs</div>
+        </div>
+        <div>
+          <div
+            style="font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;">
+            Navigation</div>
+          <div class="footer-links">
+            <a href="#" onclick="scrollToSection('features')">Features</a>
+            <a href="#" onclick="scrollToSection('register')">Register</a>
+            <a href="#" onclick="openLogin()">Dashboard</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 ShelfScan AI. All rights reserved.</div>
+        <div class="footer-copy">Gemini Vision · GPT-4o · Groq LLaMA-3.1 · ElevenLabs · Supabase</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════ DASHBOARD ═══════════ -->
+  <div id="dash-view" style="position:relative;background:#000;">
+    <div id="particles-root"></div>
+    <aside class="dash-sidebar"
+      style="background:rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
+      <div class="sb-store">
+        <div class="sb-name" id="sb-name">Loading...</div>
+        <div class="sb-phone" id="sb-phone">—</div>
+        <div class="sb-live">Live · Connected</div>
+      </div>
+      <div class="sb-sec">Main</div>
+      <button class="sb-item on" onclick="swTab('overview',this)">Overview</button>
+      <button class="sb-item" onclick="swTab('scan',this)">New Scan <span class="sb-badge">+</span></button>
+      <button class="sb-item" onclick="swTab('history',this)">Scan History</button>
+      <div class="sb-sec">Analytics</div>
+      <button class="sb-item" onclick="swTab('inventory',this)">Inventory</button>
+      <button class="sb-item" onclick="swTab('neighborhood',this)">Neighbourhood</button>
+      <button class="sb-item" onclick="swTab('voices',this)">Voice Notes</button>
+
+      <div style="flex:1;"></div>
+      <div class="sb-sec">Account</div>
+      <button class="sb-item" onclick="window.open('Vendor_marketplace.html', '_blank')"
+        style="color: var(--acid); font-weight: bold;">
+        Vendor Marketplace
+      </button>
+      <button class="sb-item danger" onclick="doLogout()">Logout</button>
+    </aside>
+
+    <main class="dash-main">
+      <!-- OVERVIEW -->
+      <div id="tab-overview" class="dtab on">
+        <div class="dash-header">
+          <div class="dash-title" id="dtitle">Overview</div>
+          <div class="dash-ts" id="dts">—</div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi k-acid">
+            <div class="kpi-delta up" id="kd1">↑</div>
+            <div class="kpi-val" id="k-scans">—</div>
+            <div class="kpi-lbl">Total Scans</div>
+          </div>
+          <div class="kpi k-cyan">
+            <div class="kpi-val" id="k-health">—</div>
+            <div class="kpi-lbl">Shelf Health Score</div>
+          </div>
+          <div class="kpi k-orange">
+            <div class="kpi-val" id="k-crit">—</div>
+            <div class="kpi-lbl">Critical Items</div>
+          </div>
+          <div class="kpi k-white">
+            <div class="kpi-val" id="k-prods">—</div>
+            <div class="kpi-lbl">Products Tracked</div>
+          </div>
+        </div>
+        <div class="g21" style="margin-bottom:14px;">
+          <div class="panel">
+            <div class="panel-h">
+              <div class="panel-title">Weekly Scan Activity</div><span id="chart-info"
+                style="font-family:var(--mono);font-size:10px;color:var(--t3);">—</span>
+            </div>
+            <div class="panel-chart"><canvas id="scanChart"></canvas></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="panel" style="margin-bottom:0;flex:1;">
+              <div class="panel-h">
+                <div class="panel-title">Shelf Health Gauge</div>
+              </div>
+              <div class="health-gauge">
+                <div class="gauge-circle">
+                  <svg class="gauge-svg" width="120" height="120" viewBox="0 0 120 120">
+                    <circle class="gauge-bg" cx="60" cy="60" r="50" />
+                    <circle class="gauge-fill" id="gauge-fill" cx="60" cy="60" r="50" stroke="var(--acid)"
+                      stroke-dasharray="314" stroke-dashoffset="314" />
+                  </svg>
+                  <div class="gauge-val"><span id="gauge-num">0</span>%<span>Health</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="g2" style="margin-bottom:14px;">
+          <div class="panel" style="margin-bottom:0;">
+            <div class="panel-h">
+              <div class="panel-title">Live Alerts</div>
+            </div>
+            <div class="alert-list" id="alertList">
+              <div class="loader-row">
+                <div class="spin"></div>Loading...
+              </div>
+            </div>
+          </div>
+          <div class="panel" style="margin-bottom:0;">
+            <div class="panel-h">
+              <div class="panel-title">Top Stockouts</div>
+            </div>
+            <div id="stockoutList">
+              <div class="loader-row">
+                <div class="spin"></div>Loading...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-title">Recent Scans</div><span class="panel-action" onclick="swTab('history',null)">View
+              all →</span>
+          </div>
+          <div id="recentScans">
+            <div class="loader-row">
+              <div class="spin"></div>Loading...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCAN TAB -->
+      <div id="tab-scan" class="dtab">
+        <div class="dash-header">
+          <div class="dash-title">New Shelf Scan</div>
+        </div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="imgInput" accept="image/*" onchange="onImgSelect(this)">
+          <span class="uz-icon">📸</span>
+          <div class="uz-title">Drop Your Shelf Photo Here</div>
+          <div class="uz-hint">Drag & drop or click to select · JPG, PNG, WEBP · Max 10MB</div>
+        </div>
+        <div id="imgPrev" style="display:none;margin-top:14px;"><img id="prevImg"
+            style="max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g2);object-fit:contain;">
+        </div>
+        <div class="pipeline" id="pipeLine">
+          <div class="pip" id="p1">1 · Upload</div>
+          <div class="pip" id="p2">2 · Vision</div>
+          <div class="pip" id="p3">3 · Debate</div>
+          <div class="pip" id="p4">4 · Voice</div>
+          <div class="pip" id="p5">5 · Saved</div>
+        </div>
+        <!-- DEBATE LIVE STREAM -->
+        <div id="debateStream" style="display:none;">
+          <div class="debate-stream">
+            <div class="debate-stream-header">
+              <div class="debate-stream-dot"></div><span id="streamAgent">AI Debate In Progress</span>
+            </div>
+            <div class="token-stream" id="tokenStream">Initializing...</div>
+          </div>
+        </div>
+        <button class="btn btn-acid btn-full btn-lg" id="scanBtn" onclick="runScan()"
+          style="display:none;margin-bottom:18px;">⚡ Run ShelfScan AI Analysis</button>
+        <div id="scanOutput" style="display:none;"></div>
+      </div>
+
+      <!-- HISTORY -->
+      <div id="tab-history" class="dtab">
+        <div class="dash-header">
+          <div class="dash-title">Scan History</div>
+        </div>
+        <div id="histList">
+          <div class="loader-row">
+            <div class="spin"></div>Loading...
+          </div>
+        </div>
+      </div>
+
+      <!-- INVENTORY -->
+      <div id="tab-inventory" class="dtab">
+        <div class="dash-header">
+          <div class="dash-title">Inventory Status</div>
+        </div>
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-title">Detected Products (Latest Per Item)</div>
+          </div>
+          <div id="invTable">
+            <div class="loader-row">
+              <div class="spin"></div>Loading...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEIGHBORHOOD -->
+      <div id="tab-neighborhood" class="dtab">
+        <div class="dash-header">
+          <div class="dash-title">Neighbourhood Intelligence</div>
+        </div>
+        <div class="g2">
+          <div class="panel" style="margin-bottom:0;">
+            <div class="panel-h">
+              <div class="panel-title">Competitor Stores <span id="pinlbl"
+                  style="color:var(--acid);margin-left:6px;font-family:var(--mono);font-size:10px;">—</span></div>
+            </div>
+            <div id="compList">
+              <div class="loader-row">
+                <div class="spin"></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" style="margin-bottom:0;">
+            <div class="panel-h">
+              <div class="panel-title">Area Stockout Trends</div>
+            </div>
+            <div id="demandList">
+              <div class="loader-row">
+                <div class="spin"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICES -->
+      <div id="tab-voices" class="dtab">
+        <div class="dash-header">
+          <div class="dash-title">Voice Notes Archive</div>
+        </div>
+        <div id="voicesList">
+          <div class="loader-row">
+            <div class="spin"></div>Loading...
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+     JAVASCRIPT — FULL SYSTEM
+══════════════════════════════════════════════ -->
+  <script>
+    'use strict';
+
+    /* ── CONFIG ── */
+    const SB_URL = 'https://qdnwfrbxxfshvuchencs.supabase.co';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkbndmcmJ4eGZzaHZ1Y2hlbmNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODQ3OTksImV4cCI6MjA4Nzc2MDc5OX0.KgetXytfa6VFUouWCFWvlG6kgaNQZKjPIx3R3mtdCjY';
+    const GEMINI_KEY = 'AIzaSyBqs0CV4MROjYy3q64ffS2xszO6bIjprZw'; // Browser fallback only
+    const OPENAI_KEY = '';
+    const GROQ_KEY = ''; // Add free key from console.groq.com for better Critic agent
+    const API_BASE = 'http://localhost:8000'; // ← Change to Railway URL in production
+
+    let STORE = null;
+    let scanChart = null;
+
+    /* ── SUPABASE ── */
+    const sb = (table, qs = '') =>
+      fetch(`${SB_URL}/rest/v1/${table}${qs}`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+      }).then(r => r.json());
+
+    const sbPost = (table, data) =>
+      fetch(`${SB_URL}/rest/v1/${table}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Prefer': 'return=representation' },
+        body: JSON.stringify(data)
+      });
+
+    const sbPatch = (table, id, data) =>
+      fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` },
+        body: JSON.stringify(data)
+      });
+
+    /* ── CANVAS BACKGROUND — PARTICLE NETWORK ── */
+    (function initCanvas() {
+      const c = document.getElementById('bgCanvas');
+      const ctx = c.getContext('2d');
+      let W, H, pts;
+
+      function resize() {
+        W = c.width = innerWidth;
+        H = c.height = innerHeight;
+        pts = Array.from({ length: 80 }, () => ({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
+          r: Math.random() * 1.2 + .3, o: Math.random() * .5 + .1
+        }));
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        // Draw connections
+        for (let i = 0; i < pts.length; i++) {
+          for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 140) {
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x, pts[i].y);
+              ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = `rgba(0,255,136,${(1 - d / 140) * .06})`;
+              ctx.lineWidth = .5;
+              ctx.stroke();
+            }
+          }
+        }
+        // Draw points
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0,255,136,${p.o * .4})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ── MARQUEE BUILD ── */
+    (function buildMarquee() {
+      const items = [
+        ['⚡', '3-Agent AI Debate'], ['🇮🇳', '12M Kirana Stores'], ['🧠', 'Gemini 1.5 Pro Vision'],
+        ['🤖', 'GPT-4o Intelligence'], ['🦙', 'Groq LLaMA-3.1 Free'], ['🎙️', 'Hindi Voice Notes'],
+        ['💾', 'Live Supabase DB'], ['📊', 'Pincode Demand Data'], ['📸', 'WhatsApp Native'],
+        ['🏘️', 'Competitor Tracking'], ['🔥', '30s End-to-End'], ['💡', 'AMD GPU Ready']
+      ];
+      const el = document.getElementById('mqi');
+      el.innerHTML = [...items, ...items].map(([i, l]) =>
+        `<div class="mitem"><span class="mitem-dot">${i}</span>${l}</div>`).join('');
+    })();
+
+    /* ── SCROLL REVEAL ── */
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('up'); });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.rv,.rl,.rr,.rs').forEach(el => revObs.observe(el));
+
+    /* ── COUNTERS ── */
+    const cntObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, t = +el.dataset.t;
+        let cur = 0;
+        const tm = setInterval(() => {
+          cur += t / 52; if (cur >= t) { cur = t; clearInterval(tm); }
+          el.textContent = Math.floor(cur);
+        }, 18);
+        cntObs.unobserve(el);
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('.cnt').forEach(el => cntObs.observe(el));
+
+    /* ── ROUTING ── */
+    function goLand() {
+      document.getElementById('landing').classList.add('active');
+      const d = document.getElementById('dash-view');
+      d.classList.remove('active'); d.style.display = 'none';
+    }
+    function goDash() {
+      document.getElementById('landing').classList.remove('active');
+      const d = document.getElementById('dash-view');
+      d.style.display = 'flex'; d.classList.add('active');
+    }
+    function scrollToSection(id) {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    /* ── LOGIN / MODAL ── */
+    function openLogin() { document.getElementById('loginModal').classList.add('open'); }
+    function closeLogin() { document.getElementById('loginModal').classList.remove('open'); }
+    document.getElementById('lphone').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+    async function doLogin() {
+      const phone = document.getElementById('lphone').value.trim();
+      const btn = document.getElementById('loginBtn');
+      const msg = document.getElementById('loginMsg');
+      if (!phone) { showMsg(msg, 'err', 'Please enter your WhatsApp number.'); return; }
+
+      btn.disabled = true; btn.textContent = 'Verifying...';
+      msg.className = 'fmsg'; msg.style.display = 'none';
+
+      try {
+        let found = null;
+
+        // Try backend first
+        try {
+          const r = await fetch(`${API_BASE}/api/stores/login/${encodeURIComponent(phone)}`);
+          if (r.ok) { const d = await r.json(); found = d.store; }
+        } catch { }
+
+        // Direct Supabase fallback — try multiple phone formats
+        if (!found) {
+          const clean = phone.replace(/[\s\-\(\)]/g, '');
+          const variants = [
+            clean,
+            '+91' + clean.replace(/^\+91/, '').replace(/^91/, ''),
+            '91' + clean.replace(/^\+91/, '').replace(/^91/, ''),
+            clean.replace(/^\+91/, '').replace(/^91/, '')
+          ];
+          for (const v of variants) {
+            try {
+              const d = await sb('stores', `?whatsapp_number=eq.${encodeURIComponent(v)}&select=*&limit=1`);
+              if (d?.length) { found = d[0]; break; }
+            } catch { }
+          }
+        }
+
+        if (found) {
+          STORE = found;
+          sessionStorage.setItem('ss_store', JSON.stringify(found));
+          closeLogin();
+          initDashboard(found);
+          goDash();
+        } else {
+          showMsg(msg, 'err', 'Store not found. Please register your store first.');
+        }
+      } catch (err) {
+        showMsg(msg, 'err', 'Connection error. Check your internet.');
+      }
+      btn.disabled = false; btn.textContent = 'Access Dashboard →';
+    }
+
+    /* ── REGISTER ── */
+    async function doRegister(e) {
+      e.preventDefault();
+      const btn = document.getElementById('regBtn');
+      const msg = document.getElementById('regMsg');
+      btn.disabled = true; btn.textContent = 'Registering...';
+      msg.className = 'fmsg'; msg.style.display = 'none';
+
+      // Fields the backend Pydantic model accepts
+      const apiData = {
+        owner_name: document.getElementById('r_own').value.trim(),
+        whatsapp_number: document.getElementById('r_ph').value.trim().replace(/[\s\-\(\)]/g, ''),
+        store_name: document.getElementById('r_st').value.trim(),
+        city: document.getElementById('r_cy').value.trim(),
+        pincode: document.getElementById('r_pi').value.trim(),
+        address: document.getElementById('r_ad').value.trim() || null,
+        store_type: document.getElementById('r_ty').value,
+        monthly_sales_volume: document.getElementById('r_vo').value || null,
+        num_shelves: parseInt(document.getElementById('r_sh').value) || null,
+        primary_language: document.getElementById('r_lg').value,
+        product_categories: document.getElementById('r_ca').value.trim() || null,
+        gst_number: document.getElementById('r_gs').value.trim().toUpperCase() || null,
+        referral_code: document.getElementById('r_rf').value.trim().toUpperCase() || null
+      };
+
+      // Extra fields only for Supabase direct insert
+      const sbData = {
+        ...apiData,
+        registered_at: new Date().toISOString(),
+        status: 'active', total_scans: 0, shelf_health_score: 0
+      };
+
+      // Validate Indian phone number
+      const ph = apiData.whatsapp_number;
+      if (!/^(\+91|91)?[6-9]\d{9}$/.test(ph)) {
+        showMsg(msg, 'err', 'Please enter a valid 10-digit Indian mobile number.');
+        btn.disabled = false; btn.textContent = 'Activate ShelfScan AI →'; return;
+      }
+
+      try {
+        let ok = false, storeData = null;
+
+        // Try backend first
+        try {
+          const r = await fetch(`${API_BASE}/api/stores/register`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(apiData)
+          });
+          if (r.ok) { const d = await r.json(); storeData = d.store; ok = true; }
+          else if (r.status === 409) throw new Error('This WhatsApp number is already registered.');
+          else {
+            const errBody = await r.json().catch(() => ({}));
+            console.warn('Backend register failed:', r.status, errBody);
+          }
+        } catch (be) { if (be.message.includes('already')) throw be; console.warn('Backend unreachable:', be.message); }
+
+        // Direct Supabase fallback
+        if (!ok) {
+          // Check for existing registration first
+          try {
+            const existing = await sb('stores', `?whatsapp_number=eq.${encodeURIComponent(apiData.whatsapp_number)}&select=id&limit=1`);
+            if (existing?.length) throw new Error('This WhatsApp number is already registered. Please login instead.');
+          } catch (checkErr) { if (checkErr.message.includes('already')) throw checkErr; }
+
+          const r = await sbPost('stores', sbData);
+          if (r.ok || r.status === 201) {
+            const d = await r.json();
+            storeData = d?.[0]; ok = true;
+          } else {
+            const e = await r.json().catch(() => ({}));
+            if (e.code === '23505') throw new Error('This WhatsApp number is already registered.');
+            throw new Error(e.message || 'Registration failed. Please try again.');
+          }
+        }
+
+        if (ok) {
+          showMsg(msg, 'ok', '✓ Store registered successfully! Redirecting to dashboard...');
+          document.getElementById('regForm').reset();
+          btn.textContent = '✓ Registered Successfully!';
+          btn.style.background = 'var(--acid2)';
+          // Auto-login after brief delay
+          if (storeData) {
+            setTimeout(() => {
+              STORE = storeData;
+              sessionStorage.setItem('ss_store', JSON.stringify(storeData));
+              initDashboard(storeData);
+              goDash();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1500);
+          }
+        }
+      } catch (err) {
+        showMsg(msg, 'err', err.message || 'Registration failed. Please try again.');
+      }
+      btn.disabled = false;
+      if (btn.textContent !== '✓ Registered Successfully!') btn.textContent = 'Activate ShelfScan AI →';
+    }
+
+    /* ── DASHBOARD INIT ── */
+    function initDashboard(s) {
+      document.getElementById('sb-name').textContent = s.store_name || 'My Store';
+      document.getElementById('sb-phone').textContent = s.whatsapp_number || '—';
+      document.getElementById('dtitle').textContent = s.store_name || 'Dashboard';
+      updateClock();
+      loadOverview(s.id);
+    }
+
+    function updateClock() {
+      const el = document.getElementById('dts');
+      if (el) el.textContent = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+    }
+    setInterval(updateClock, 60000);
+
+    /* ── FETCH SCAN DATA ── */
+    async function fetchScanActivity(sid) {
+      try {
+        const resp = await fetch(`${API_BASE}/api/scans?store_id=${sid}&order=created_at.desc&limit=100`);
+        if (resp.ok) return await resp.json();
+      } catch (e) {
+        console.warn('fetchScanActivity API failed, falling back to Supabase', e);
+      }
+      try {
+        return await sb('scans', `?store_id=eq.${sid}&select=*&order=created_at.desc&limit=100`);
+      } catch (err) {
+        console.error('fetchScanActivity Supabase fallback failed', err);
+        return [];
+      }
+    }
+
+    /* ── LOAD OVERVIEW ── */
+    async function loadOverview(sid) {
+      try {
+        let dash = null;
+
+        // Try backend
+        try {
+          const r = await fetch(`${API_BASE}/api/dashboard/${sid}`);
+          if (r.ok) dash = await r.json();
+        } catch { }
+
+        // Build from Supabase directly
+        if (!dash) {
+          const [scans, prods, voices] = await Promise.all([
+            fetchScanActivity(sid),
+            sb('detected_products', `?store_id=eq.${sid}&select=*&order=detected_at.desc&limit=100`),
+            sb('voice_notes', `?store_id=eq.${sid}&select=*&order=created_at.desc&limit=20`)
+          ]);
+          const pl = prods || [];
+          dash = {
+            stats: {
+              total_scans: (scans || []).length,
+              shelf_health_score: STORE?.shelf_health_score || calcHealth(pl),
+              critical_items: pl.filter(p => p.stock_level === 'critical').length,
+              total_products_tracked: new Set(pl.map(p => p.product_name)).size
+            },
+            recent_scans: (scans || []).slice(0, 6),
+            current_products: pl.slice(0, 80),
+            alerts: buildAlerts(pl),
+            voice_notes: voices || [],
+            scan_chart_data: buildChartData(scans || [])
+          };
+        }
+
+        window.__dash = dash;
+        renderKPIs(dash.stats);
+        renderAlerts(dash.alerts, dash.current_products);
+        renderRecentScans(dash.recent_scans);
+        renderChart(dash.scan_chart_data);
+        setGauge(dash.stats.shelf_health_score || 0);
+
+      } catch (err) { console.error('Dashboard:', err); }
+    }
+
+    function calcHealth(prods) {
+      if (!prods.length) return 0;
+      const ok = prods.filter(p => p.stock_level === 'ok' || p.stock_level === 'overstocked').length;
+      return Math.round((ok / prods.length) * 100);
+    }
+
+    function buildAlerts(products) {
+      const out = [], seen = new Set();
+      for (const p of products) {
+        if (seen.has(p.product_name)) continue;
+        seen.add(p.product_name);
+        if (p.stock_level === 'critical') out.push({ type: 'crit', msg: `${p.product_name} — Critical stockout` });
+        else if (p.stock_level === 'low') out.push({ type: 'warn', msg: `${p.product_name} — Low (${p.quantity_estimate || '?'} units)` });
+        else if (!p.facing_correct) out.push({ type: 'info', msg: `${p.product_name} — Incorrect shelf facing` });
+      }
+      return out.slice(0, 8);
+    }
+
+    function buildChartData(scans) {
+      const w = {};
+      (scans || []).forEach(s => {
+        try {
+          const d = new Date(s.created_at);
+          const k = `${d.getMonth() + 1}/${d.getDate()}`;
+          w[k] = (w[k] || 0) + 1;
+        } catch { }
+      });
+      return Object.entries(w).slice(-10).map(([k, v]) => ({ week: k, scans: v }));
+    }
+
+    function renderKPIs(s) {
+      document.getElementById('k-scans').textContent = s.total_scans ?? '0';
+      document.getElementById('k-health').textContent = (s.shelf_health_score ?? 0) + '%';
+      document.getElementById('k-crit').textContent = s.critical_items ?? '0';
+      document.getElementById('k-prods').textContent = s.total_products_tracked ?? '0';
+    }
+
+    function renderAlerts(alerts, prods) {
+      const c = document.getElementById('alertList');
+      if (!alerts?.length) { c.innerHTML = '<div class="alert-row ok">✓ No alerts — all shelves healthy</div>'; }
+      else c.innerHTML = alerts.map(a => `<div class="alert-row ${a.type}">${a.type === 'crit' ? '🔴' : a.type === 'warn' ? '🟡' : '🔵'} ${a.msg}</div>`).join('');
+
+      // Stockouts
+      const sl = document.getElementById('stockoutList');
+      const stockouts = (prods || []).filter(p => p.stock_level === 'critical');
+      if (!stockouts.length) { sl.innerHTML = '<div style="padding:12px;font-family:var(--mono);font-size:12px;color:var(--t3);">No critical stockouts</div>'; return; }
+      const seen = new Set();
+      sl.innerHTML = stockouts.filter(p => { if (seen.has(p.product_name)) return false; seen.add(p.product_name); return true; })
+        .slice(0, 6).map(p => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--g2);">
+      <span style="font-size:12px;color:var(--t1);">${p.product_name}</span>
+      <span class="stock-pill critical">Critical</span>
+    </div>`).join('');
+    }
+
+    function renderRecentScans(scans) {
+      const c = document.getElementById('recentScans');
+      if (!scans?.length) { c.innerHTML = mkEmpty('📷', 'No scans yet', 'Scan your shelf to get started.'); return; }
+      c.innerHTML = scans.map(s => mkScanCard(s)).join('');
+    }
+
+    function renderChart(data) {
+      const ctx = document.getElementById('scanChart')?.getContext('2d');
+      if (!ctx) return;
+      if (scanChart) scanChart.destroy();
+      const points = data?.length ? data : [{ week: 'No Data', scans: 0 }];
+      document.getElementById('chart-info').textContent = `${points.length} data point${points.length === 1 ? '' : 's'}`;
+      scanChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: points.map(d => d.week),
+          datasets: [{
+            data: points.map(d => d.scans),
+            backgroundColor: 'rgba(0,255,136,.12)',
+            borderColor: 'rgba(0,255,136,.5)',
+            borderWidth: 1, borderRadius: 3, borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 2.5,
+          layout: { padding: { top: 6, right: 8, bottom: 10, left: 8 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => `${c.raw || 0} scan${c.raw !== 1 ? 's' : ''}` } }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,.03)' },
+              ticks: { color: '#2e4a66', font: { family: 'JetBrains Mono', size: 10 } }
+            },
+            y: {
+              beginAtZero: true,
+              suggestedMax: Math.max(...points.map(p => p.scans), 5) + 2,
+              grid: { color: 'rgba(255,255,255,.03)' },
+              ticks: {
+                color: '#2e4a66',
+                font: { family: 'JetBrains Mono', size: 10 },
+                stepSize: 1,
+                precision: 0
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function setGauge(score) {
+      const fill = document.getElementById('gauge-fill');
+      const num = document.getElementById('gauge-num');
+      const circ = 2 * Math.PI * 50; // 314.16
+      const offset = circ - (score / 100) * circ;
+      fill.style.strokeDashoffset = offset;
+      fill.style.stroke = score >= 70 ? 'var(--acid)' : score >= 40 ? 'var(--orange)' : 'var(--red)';
+      // Animate number
+      let cur = 0;
+      const tm = setInterval(() => {
+        cur += score / 40; if (cur >= score) { cur = score; clearInterval(tm); }
+        num.textContent = Math.floor(cur);
+      }, 25);
+    }
+
+    /* ── TABS ── */
+    function swTab(name, btn) {
+      document.querySelectorAll('.dtab').forEach(t => t.classList.remove('on'));
+      document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('on'));
+      document.getElementById('tab-' + name)?.classList.add('on');
+      if (btn) btn.classList.add('on');
+      const sid = STORE?.id;
+      if (name === 'history') loadHistory(sid);
+      if (name === 'inventory') loadInventory(sid);
+      if (name === 'neighborhood') loadNeighborhood(sid);
+      if (name === 'voices') loadVoices(sid);
+
+    }
+
+    /* ── HISTORY ── */
+    async function loadHistory(sid) {
+      const c = document.getElementById('histList'); c.innerHTML = mkLoader();
+      try {
+        const sc = await sb('scans', `?store_id=eq.${sid}&select=*&order=created_at.desc&limit=30`);
+        if (!sc?.length) { c.innerHTML = mkEmpty('🗂', 'No scans yet', 'Scan history appears here.'); return; }
+        c.innerHTML = sc.map(s => mkScanCard(s, true)).join('');
+      } catch { c.innerHTML = mkEmpty('⚠️', 'Error', 'Could not load history.'); }
+    }
+
+    async function viewScanDetail(scanId) {
+      const c = document.getElementById('histList'); c.innerHTML = mkLoader('Loading scan details...');
+      try {
+        const [sr, pr, db, vr] = await Promise.all([
+          sb('scans', `?id=eq.${scanId}&select=*&limit=1`),
+          sb('detected_products', `?scan_id=eq.${scanId}&select=*`),
+          sb('debate_rounds', `?scan_id=eq.${scanId}&select=*&order=created_at.asc`),
+          sb('voice_notes', `?scan_id=eq.${scanId}&select=*&limit=1`)
+        ]);
+        const s = sr?.[0]; if (!s) { c.innerHTML = mkEmpty('🔍', 'Not Found', ''); return; }
+        const v = vr?.[0];
+        c.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+        <button class="btn btn-ghost btn-sm" onclick="loadHistory('${STORE?.id}')">← Back</button>
+        <div class="dash-title" style="font-size:20px;">Scan Detail</div>
+        <span class="status-badge ${s.status || 'completed'}">${s.status || 'completed'}</span>
+      </div>
+      ${s.image_url ? `<img src="${s.image_url}" style="max-width:100%;max-height:320px;border-radius:10px;border:1px solid var(--g2);object-fit:contain;margin-bottom:18px;">` : ''}
+      <div class="kpi-grid" style="margin-bottom:18px;">
+        <div class="kpi k-cyan"><div class="kpi-val">${s.shelf_health_score || 0}%</div><div class="kpi-lbl">Health Score</div></div>
+        <div class="kpi k-acid"><div class="kpi-val">${s.products_detected || 0}</div><div class="kpi-lbl">Products</div></div>
+        <div class="kpi k-orange"><div class="kpi-val">${s.critical_items || 0}</div><div class="kpi-lbl">Critical</div></div>
+        <div class="kpi k-white"><div class="kpi-val">${fmtTime(s.created_at)}</div><div class="kpi-lbl">Time</div></div>
+      </div>
+      ${db?.length ? `<div class="panel" style="margin-bottom:14px;"><div class="panel-h"><div class="panel-title">AI Debate Rounds (${db.length})</div></div>${db.map(d => mkDebateCard(d)).join('')}</div>` : ''}
+      ${pr?.length ? `<div class="panel" style="margin-bottom:14px;"><div class="panel-h"><div class="panel-title">Products Detected (${pr.length})</div></div>${mkProdTable(pr)}</div>` : ''}
+      ${v?.audio_url ? `<div class="panel"><div class="panel-h"><div class="panel-title">🎙️ Hindi Voice Note</div></div><audio controls src="${v.audio_url}" style="width:100%;margin-bottom:10px;border-radius:6px;"></audio><div style="font-size:13px;color:var(--t2);line-height:1.75;">${v.text_content || ''}</div></div>`
+            : s.final_recommendation ? `<div class="panel"><div class="panel-h"><div class="panel-title">Final Recommendation</div></div><div style="font-size:13px;color:var(--t1);line-height:1.8;">${s.final_recommendation}</div></div>` : ''}
+    `;
+      } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
+    }
+
+    /* ── INVENTORY ── */
+    async function loadInventory(sid) {
+      const c = document.getElementById('invTable'); c.innerHTML = mkLoader();
+      try {
+        const p = await sb('detected_products', `?store_id=eq.${sid}&select=*&order=detected_at.desc`);
+        if (!p?.length) { c.innerHTML = mkEmpty('📦', 'No data', 'Scan your shelf first.'); return; }
+        const latest = {};
+        p.forEach(x => { if (!latest[x.product_name] || latest[x.product_name].detected_at < x.detected_at) latest[x.product_name] = x; });
+        c.innerHTML = mkProdTable(Object.values(latest));
+      } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
+    }
+
+    /* ── NEIGHBORHOOD ── */
+    async function loadNeighborhood(sid) {
+      const pin = STORE?.pincode;
+      document.getElementById('pinlbl').textContent = pin ? `PIN ${pin}` : '';
+      const cc = document.getElementById('compList'), dc = document.getElementById('demandList');
+      cc.innerHTML = dc.innerHTML = mkLoader();
+      try {
+        const [cx, dm] = await Promise.all([
+          pin ? sb('stores', `?pincode=eq.${pin}&id=neq.${sid}&select=store_name,store_type,shelf_health_score,last_scan_at,total_scans`) : Promise.resolve([]),
+          pin ? sb('neighborhood_demand', `?pincode=eq.${pin}&select=*&order=week_start.desc&limit=5`) : Promise.resolve([])
+        ]);
+        cc.innerHTML = cx?.length ? cx.map(x => `
+      <div class="comp-card">
+        <div><div class="comp-name">${x.store_name}</div><div class="comp-meta">${x.store_type || 'kirana'} · ${x.total_scans || 0} scans · ${x.last_scan_at ? 'Last: ' + fmtDate(x.last_scan_at) : 'Never scanned'}</div></div>
+        <div class="comp-score ${(x.shelf_health_score || 0) >= 60 ? 'g' : 'a'}">${x.shelf_health_score || 0}%</div>
+      </div>`).join('') : mkEmpty('🏘️', 'No competitors', 'You are the first store in this pincode!');
+
+        dc.innerHTML = dm?.length ? dm.map(d => `
+      <div class="comp-card" style="flex-direction:column;align-items:flex-start;gap:5px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--acid);">Week of ${d.week_start || '—'}</div>
+        <div style="font-size:12px;color:var(--t2);">Stores scanned: <strong style="color:var(--t0)">${d.total_stores_scanned || 0}</strong></div>
+        ${d.stockout_products ? `<div style="font-size:11px;color:var(--orange)">⚠ Stockouts: ${(JSON.parse(d.stockout_products || '[]')).slice(0, 4).join(', ')}</div>` : ''}
+      </div>`).join('') : mkEmpty('📈', 'No demand data', 'Accumulates as more stores scan.');
+      } catch (e) { cc.innerHTML = dc.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
+    }
+
+    /* ── VOICES ── */
+    async function loadVoices(sid) {
+      const c = document.getElementById('voicesList'); c.innerHTML = mkLoader();
+      try {
+        const notes = await sb('voice_notes', `?store_id=eq.${sid}&select=*&order=created_at.desc&limit=20`);
+        if (!notes?.length) { c.innerHTML = mkEmpty('🎙️', 'No voice notes', 'Generated automatically after each scan.'); return; }
+
+        // For each voice note, try to load associated scan products for structured table
+        const notesHtml = await Promise.all(notes.map(async n => {
+          let structuredHtml = '';
+          if (n.scan_id) {
+            try {
+              const prods = await sb('detected_products', `?scan_id=eq.${n.scan_id}&select=*`);
+              if (prods?.length) {
+                structuredHtml = mkStructuredReport(prods.map(p => ({
+                  product: p.product_name, brand: p.brand || '', category: p.category || '',
+                  stock_status: p.stock_level || 'ok', qty_on_shelf: p.quantity_estimate || 0,
+                  recommended_action: p.stock_level === 'critical' ? 'ORDER TODAY' : p.stock_level === 'low' ? 'Order this week' : 'No action',
+                  priority: p.stock_level === 'critical' ? '🔴 URGENT' : p.stock_level === 'low' ? '🟡 HIGH' : '🟢 OK',
+                  est_cost_inr: 0
+                })));
+              }
+            } catch { }
+          }
+          return `
+      <div class="panel" style="margin-bottom:12px;">
+        <div class="panel-h">
+          <div class="panel-title">${fmtDate(n.created_at)}</div>
+          <span style="font-family:var(--mono);font-size:9px;background:rgba(0,255,136,.08);color:var(--acid);border:1px solid rgba(0,255,136,.18);padding:3px 8px;border-radius:100px;">${n.language || 'hindi'} · ${n.duration_seconds || '?'}s</span>
+        </div>
+        ${n.audio_url ? `<audio controls src="${n.audio_url}" style="width:100%;margin-bottom:10px;border-radius:6px;"></audio>` : `<div style="font-size:11px;color:var(--t3);margin-bottom:8px;">Audio file unavailable</div>`}
+        <div style="font-size:13px;color:var(--t2);line-height:1.75;margin-bottom:12px;">${n.text_content || '—'}</div>
+        ${structuredHtml}
+      </div>`;
+        }));
+        c.innerHTML = notesHtml.join('');
+      } catch (e) { c.innerHTML = mkEmpty('⚠️', 'Error', e.message); }
+    }
+
+
+
+    /* ═══════════════════════════════════════
+       SCAN PIPELINE — FULL AI INTEGRATION
+    ═══════════════════════════════════════ */
+
+    /* Image select */
+    function onImgSelect(inp) {
+      if (!inp.files?.[0]) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('prevImg').src = e.target.result;
+        document.getElementById('imgPrev').style.display = 'block';
+        document.getElementById('scanBtn').style.display = 'flex';
+        document.getElementById('scanOutput').style.display = 'none';
+        document.getElementById('debateStream').style.display = 'none';
+      };
+      reader.readAsDataURL(inp.files[0]);
+    }
+
+    // Drag & drop
+    const uz = document.getElementById('uploadZone');
+    uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
+    uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
+    uz.addEventListener('drop', e => {
+      e.preventDefault(); uz.classList.remove('drag');
+      const f = e.dataTransfer?.files?.[0];
+      if (f?.type.startsWith('image/')) {
+        const i = document.getElementById('imgInput');
+        const dt = new DataTransfer(); dt.items.add(f); i.files = dt.files;
+        onImgSelect(i);
+      }
+    });
+
+    function setPip(n, state) {
+      const el = document.getElementById('p' + n); if (!el) return;
+      el.className = 'pip' + (state ? ' ' + state : '');
+    }
+
+    function streamText(elementId, text, speed = 25) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      el.innerHTML = '';
+      let i = 0;
+      const tm = setInterval(() => {
+        if (i >= text.length) { clearInterval(tm); return; }
+        el.innerHTML += text[i] === '\n' ? '<br>' : text[i];
+        i++;
+      }, speed);
+    }
+
+    /* MAIN SCAN FUNCTION */
+    async function runScan() {
+      if (!STORE) { openLogin(); return; }
+      const inp = document.getElementById('imgInput');
+      if (!inp.files?.[0]) { alert('Please select a shelf image first.'); return; }
+
+      const btn = document.getElementById('scanBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spin" style="width:14px;height:14px;border-width:2px;"></div> Analyzing Shelf...';
+      document.getElementById('scanOutput').style.display = 'none';
+      for (let i = 1; i <= 5; i++) setPip(i, '');
+      setPip(1, 'active');
+
+      // Try backend first — it handles everything
+      try {
+        const fd = new FormData();
+        fd.append('store_id', STORE.id);
+        fd.append('image', inp.files[0]);
+
+        // Show debate stream UI
+        document.getElementById('debateStream').style.display = 'block';
+        document.getElementById('streamAgent').textContent = '🔍 Uploading to Cloudinary...';
+        streamText('tokenStream', 'Uploading image to CDN...');
+
+        setPip(1, 'done'); setPip(2, 'active');
+
+        const r = await fetch(`${API_BASE}/api/scan`, { method: 'POST', body: fd });
+
+        if (!r.ok) throw new Error(`Backend error: ${r.status}`);
+
+        const data = await r.json();
+
+        // Animate pipeline
+        setPip(2, 'done'); setPip(3, 'active');
+        document.getElementById('streamAgent').textContent = '⚖️ AI Debate Complete';
+        streamText('tokenStream', data.final_recommendation || 'Analysis complete.');
+        await sleep(600);
+        setPip(3, 'done'); setPip(4, 'active');
+        await sleep(400);
+        setPip(4, 'done'); setPip(5, 'active');
+        await sleep(300);
+        setPip(5, 'done');
+
+        renderScanOutput(data);
+        document.getElementById('scanOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        loadOverview(STORE.id);
+
+      } catch (backendErr) {
+        // ── FRONTEND-ONLY AI MODE (No Backend) ──
+        // Uses Gemini API directly from browser, then simulates debate
+        console.log('Backend unavailable, using frontend AI mode:', backendErr.message);
+        await runFrontendAI(inp.files[0]);
+      }
+
+      btn.disabled = false; btn.innerHTML = '⚡ Run ShelfScan AI Analysis';
+    }
+
+    async function runFrontendAI(imageFile) {
+      const debStream = document.getElementById('debateStream');
+      debStream.style.display = 'block';
+
+      // Step 1: Convert image to base64
+      setPip(1, 'active');
+      document.getElementById('streamAgent').textContent = '📸 Processing image...';
+      streamText('tokenStream', 'Converting image for AI analysis...');
+      const b64 = await fileToB64(imageFile);
+      setPip(1, 'done'); setPip(2, 'active');
+
+      // Step 2: Gemini Vision Analysis
+      document.getElementById('streamAgent').textContent = '👁️ Gemini 1.5 Pro — Analysing shelf...';
+      let visionResult = null;
+      try {
+        visionResult = await callGeminiVision(b64, imageFile.type);
+        streamText('tokenStream', `✓ Vision complete. Detected ${visionResult.products?.length || 0} products. Health: ${visionResult.shelf_health_score || 0}%`);
+      } catch (e) {
+        streamText('tokenStream', '⚠ Vision API error — using mock data for demo.');
+        visionResult = getMockVisionResult();
+      }
+      setPip(2, 'done'); setPip(3, 'active');
+
+      await sleep(500);
+
+      // Step 3: AI Debate
+      document.getElementById('streamAgent').textContent = '⚖️ Running 3-Agent AI Debate...';
+
+      const debateRounds = [];
+
+      // PRESENTER — Gemini Pro
+      document.getElementById('streamAgent').textContent = '🎤 Presenter (Gemini Pro) — Building restock plan...';
+      let presenterOutput = '';
+      try {
+        presenterOutput = await callGeminiPresenter(visionResult);
+        streamText('tokenStream', '🎤 PRESENTER (Gemini):\n' + presenterOutput.slice(0, 200) + '...');
+        debateRounds.push({ agent: 'Gemini 1.5 Pro', type: 'presenter', output: presenterOutput, confidence: 82 });
+      } catch {
+        presenterOutput = getMockPresenter(visionResult);
+        debateRounds.push({ agent: 'Gemini 1.5 Pro', type: 'presenter', output: presenterOutput, confidence: 78 });
+      }
+      await sleep(800);
+
+      // CRITIC — GPT-4o Mini (via OpenAI) or Groq fallback
+      document.getElementById('streamAgent').textContent = '⚖️ Critic — Challenging economics...';
+      let criticOutput = '';
+      try {
+        criticOutput = await callGroqCritic(presenterOutput, visionResult);
+        streamText('tokenStream', '⚖️ CRITIC (Groq LLaMA):\n' + criticOutput.slice(0, 200) + '...');
+        debateRounds.push({ agent: 'Groq LLaMA-3.1', type: 'critic', output: criticOutput, confidence: 74 });
+      } catch {
+        criticOutput = getMockCritic(visionResult);
+        debateRounds.push({ agent: 'GPT-4o Mini', type: 'critic', output: criticOutput, confidence: 70 });
+      }
+      await sleep(800);
+
+      // DECIDER — Gemini Pro
+      document.getElementById('streamAgent').textContent = '🎯 Decider (Gemini) — Synthesising final plan...';
+      let deciderOutput = '';
+      let hindiText = '';
+      try {
+        const dec = await callGeminiDecider(presenterOutput, criticOutput, visionResult);
+        deciderOutput = dec.english; hindiText = dec.hindi;
+        streamText('tokenStream', '🎯 DECIDER (Gemini):\n' + deciderOutput.slice(0, 200) + '...');
+        debateRounds.push({ agent: 'Gemini 1.5 Pro', type: 'decider', output: deciderOutput, confidence: 88 });
+      } catch {
+        deciderOutput = getMockDecider(visionResult);
+        hindiText = 'Namaskar! ShelfScan AI ne aapki shelf check ki. Kuch zaruri cheezein mangana padega.';
+        debateRounds.push({ agent: 'Gemini 1.5 Pro', type: 'decider', output: deciderOutput, confidence: 85 });
+      }
+
+      setPip(3, 'done'); setPip(4, 'active');
+
+      // Step 4: Save to Supabase
+      document.getElementById('streamAgent').textContent = '💾 Saving to database...';
+      const scanId = await saveScanToSupabase(visionResult, debateRounds, hindiText || deciderOutput, imageFile);
+      streamText('tokenStream', hindiText || deciderOutput);
+
+      setPip(4, 'done'); setPip(5, 'active');
+      await sleep(300);
+      setPip(5, 'done');
+
+      // Render output
+      const synthResult = {
+        scan_id: scanId,
+        shelf_health_score: visionResult.shelf_health_score || 0,
+        vision_analysis: visionResult,
+        debate_rounds: debateRounds,
+        final_recommendation: hindiText || deciderOutput,
+        voice_note_url: null
+      };
+      renderScanOutput(synthResult);
+      document.getElementById('scanOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      await loadOverview(STORE.id);
+    }
+
+    /* ── AI API CALLS ── */
+    async function callGeminiVision(b64, mimeType) {
+      const prompt = `You are an expert FMCG shelf analyst for Indian kirana stores. Analyse this shelf image and return ONLY valid JSON (no markdown, no extra text):
+{
+  "products": [{"product_name":"string","brand":"string","category":"string","stock_level":"critical|low|ok|overstocked","quantity_estimate":10,"facing_correct":true,"shelf_position":"top|middle|bottom|eye_level","price_visible":false}],
+  "shelf_health_score": 75,
+  "critical_count": 2,
+  "low_count": 3,
+  "ok_count": 5,
+  "overstocked_count": 1,
+  "empty_sections": 2,
+  "facing_issues": 1,
+  "top_restock_urgent": ["Product A", "Product B"],
+  "summary": "Brief shelf summary"
+}`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { inline_data: { mime_type: mimeType, data: b64 } },
+              { text: prompt }
+            ]
+          }],
+          generationConfig: { temperature: 0.1, maxOutputTokens: 3000 }
+        })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+      text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      return JSON.parse(text);
+    }
+
+    async function callGeminiPresenter(vision) {
+      const prompt = `You are the PRESENTER agent in a 3-agent AI debate for Indian kirana store shelf optimization.
+Vision data: ${JSON.stringify(vision).slice(0, 1500)}
+
+Create a detailed restock recommendation. Be specific about:
+- Which products to restock urgently (priority order)
+- Quantities to order
+- Estimated costs (typical Indian kirana prices)
+- Shelf rearrangement suggestions
+- Why each recommendation matters for revenue
+
+Write 3-4 paragraphs in English. Be specific and actionable.`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.4, maxOutputTokens: 600 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    }
+
+    async function callGroqCritic(presenterPlan, vision) {
+      // Try Groq (free, fast) - needs GROQ_KEY
+      if (GROQ_KEY) {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+          body: JSON.stringify({
+            model: 'llama-3.1-70b-versatile',
+            messages: [{
+              role: 'user',
+              content: `You are the CRITIC agent in a 3-agent AI debate for Indian kirana store shelf restocking.
+The PRESENTER recommended: ${presenterPlan.slice(0, 800)}
+Vision data shows: ${JSON.stringify(vision).slice(0, 500)}
+
+Challenge this plan critically. Consider:
+- Cash flow constraints (typical kirana daily revenue ₹2K-₹10K)
+- Risk of over-ordering perishables
+- Local demand patterns for this pincode
+- Priority conflicts with limited budget
+- What the presenter got wrong or missed
+
+Be direct and challenging. 3-4 paragraphs.`
+            }],
+            max_tokens: 500, temperature: 0.5
+          })
+        });
+        const d = await res.json();
+        if (!d.error) return d.choices?.[0]?.message?.content || '';
+      }
+      throw new Error('No Groq key');
+    }
+
+    async function callGeminiDecider(presenter, critic, vision) {
+      const prompt = `You are the DECIDER agent in a 3-agent AI debate for Indian kirana store shelf optimization.
+
+PRESENTER said: ${presenter.slice(0, 600)}
+CRITIC challenged: ${critic.slice(0, 600)}
+Vision data: ${JSON.stringify(vision).slice(0, 400)}
+
+Synthesise the best final action plan. Return ONLY JSON:
+{
+  "english": "Final action plan in English (3-4 sentences, concrete steps, ranked by priority)",
+  "hindi": "Namaskar dukan-dar bhai! [Hindi voice recommendation 3-4 sentences - natural, conversational, specific about products to order]"
+}`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.3, maxOutputTokens: 400 } })
+      });
+      const data = await res.json();
+      let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+      text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      return JSON.parse(text);
+    }
+
+    /* ── SAVE TO SUPABASE ── */
+    async function saveScanToSupabase(vision, debates, finalRec, imageFile) {
+      try {
+        // Create scan record
+        const scanData = {
+          store_id: STORE.id,
+          status: 'completed',
+          shelf_health_score: vision.shelf_health_score || 0,
+          products_detected: vision.products?.length || 0,
+          critical_items: vision.critical_count || 0,
+          vision_summary: JSON.stringify(vision),
+          final_recommendation: finalRec,
+          created_at: new Date().toISOString(),
+          completed_at: new Date().toISOString()
+        };
+
+        const sr = await sbPost('scans', scanData);
+        let scanId = null;
+        if (sr.ok || sr.status === 201) {
+          const sd = await sr.json();
+          scanId = sd?.[0]?.id;
+        }
+
+        if (scanId && vision.products?.length) {
+          // Save detected products
+          const products = vision.products.map(p => ({
+            scan_id: scanId, store_id: STORE.id,
+            product_name: p.product_name || p.name,
+            brand: p.brand || null, category: p.category || null,
+            stock_level: p.stock_level || 'ok',
+            quantity_estimate: p.quantity_estimate || null,
+            facing_correct: p.facing_correct !== false,
+            shelf_position: p.shelf_position || null,
+            detected_at: new Date().toISOString()
+          }));
+          await sbPost('detected_products', products);
+
+          // Save debate rounds
+          const dRounds = debates.map(d => ({
+            scan_id: scanId, agent_name: d.agent, agent_type: d.type,
+            recommendation: d.output, confidence_score: d.confidence || 75,
+            model_used: d.agent, created_at: new Date().toISOString()
+          }));
+          await sbPost('debate_rounds', dRounds);
+
+          // Update store stats
+          await sbPatch('stores', STORE.id, {
+            total_scans: (STORE.total_scans || 0) + 1,
+            shelf_health_score: vision.shelf_health_score || 0,
+            last_scan_at: new Date().toISOString()
+          });
+          STORE.total_scans = (STORE.total_scans || 0) + 1;
+        }
+        return scanId;
+      } catch (e) { console.error('Supabase save error:', e); return null; }
+    }
+
+    /* ── STRUCTURED REPORT TABLE ── */
+    function mkStructuredReport(report) {
+      if (!report?.length) return '';
+      return `
+    <div style="margin-top:12px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--acid);margin-bottom:10px;display:flex;align-items:center;gap:8px;">📊 Structured Analysis Report</div>
+      <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Product</th><th>Brand</th><th>Category</th><th>Status</th><th>Qty</th><th>Recommended Action</th><th>Priority</th><th>Est Cost</th></tr></thead>
+        <tbody>${report.map((r, i) => `
+          <tr>
+            <td style="font-family:var(--mono);color:var(--t3);">${i + 1}</td>
+            <td style="font-weight:600;color:var(--t0)">${r.product || '—'}</td>
+            <td>${r.brand || '—'}</td>
+            <td>${r.category || '—'}</td>
+            <td><span class="stock-pill ${r.stock_status || 'ok'}">${r.stock_status || 'ok'}</span></td>
+            <td style="font-family:var(--mono)">${r.qty_on_shelf ?? '?'}</td>
+            <td style="font-size:12px;color:var(--t1);">${r.recommended_action || '—'}</td>
+            <td style="font-size:11px;white-space:nowrap;">${r.priority || '—'}</td>
+            <td style="font-family:var(--mono);color:var(--t2);">₹${r.est_cost_inr || 0}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      </div>
+    </div>`;
+    }
+
+    /* Build structured report from vision products as fallback */
+    function buildStructuredFromVision(products) {
+      if (!products?.length) return [];
+      const priorityMap = { critical: '🔴 URGENT', low: '🟡 HIGH', ok: '🟢 OK', overstocked: '🔵 OVERSTOCKED' };
+      const actionMap = { critical: 'ORDER TODAY', low: 'Order this week', ok: 'No action needed', overstocked: 'Hold — reduce next order' };
+      return products.map(p => ({
+        product: p.product_name || p.name || 'Unknown', brand: p.brand || '', category: p.category || '',
+        stock_status: p.stock_level || 'ok', qty_on_shelf: p.quantity_estimate || p.quantity || 0,
+        recommended_action: actionMap[p.stock_level] || 'Monitor', priority: priorityMap[p.stock_level] || '🟢 OK', est_cost_inr: 0
+      }));
+    }
+
+    /* ── RENDER SCAN OUTPUT ── */
+    function renderScanOutput(data) {
+      const prods = data.vision_analysis?.products || [];
+      const structuredReport = data.structured_report?.length ? data.structured_report : buildStructuredFromVision(prods);
+      const so = document.getElementById('scanOutput');
+      so.style.display = 'block';
+      so.innerHTML = `
+    <div class="kpi-grid" style="margin-bottom:18px;">
+      <div class="kpi k-acid"><div class="kpi-val">${prods.length}</div><div class="kpi-lbl">Products Detected</div></div>
+      <div class="kpi k-cyan"><div class="kpi-val">${data.shelf_health_score || 0}%</div><div class="kpi-lbl">Health Score</div></div>
+      <div class="kpi k-orange"><div class="kpi-val">${data.vision_analysis?.critical_count || 0}</div><div class="kpi-lbl">Critical Items</div></div>
+      <div class="kpi k-white"><div class="kpi-val">${data.vision_analysis?.low_count || 0}</div><div class="kpi-lbl">Low Stock</div></div>
+    </div>
+    ${data.voice_note_url ? `
+      <div class="panel" style="margin-bottom:14px;">
+        <div class="panel-h"><div class="panel-title">🎙️ Hindi Voice Note</div></div>
+        <div class="voice-player">
+          <button class="vp-btn" id="vpbtn" onclick="toggleVoice()">▶</button>
+          <div class="vp-info">
+            <div class="vp-title">Restock Recommendation — Hindi/Hinglish</div>
+            <audio id="vaudio" src="${data.voice_note_url}" onended="document.getElementById('vpbtn').textContent='▶'"></audio>
+            <div class="vp-waveform">${Array.from({ length: 18 }, (_, i) => `<div class="wave-bar" style="animation-delay:${i * 0.07}s;height:${4 + Math.random() * 16}px;"></div>`).join('')}</div>
+            <div class="vp-text">${data.final_recommendation || ''}</div>
+          </div>
+        </div>
+      </div>`
+          : data.final_recommendation ? `
+      <div class="panel" style="margin-bottom:14px;">
+        <div class="panel-h"><div class="panel-title">🎯 Final AI Recommendation</div></div>
+        <div style="font-size:14px;color:var(--t1);line-height:1.85;padding:4px 0;">${data.final_recommendation}</div>
+      </div>` : ''}
+    ${structuredReport.length ? `<div class="panel" style="margin-bottom:14px;"><div class="panel-h"><div class="panel-title">📊 AI Analysis Report</div></div>${mkStructuredReport(structuredReport)}</div>` : ''}
+    ${prods.length ? `<div class="panel" style="margin-bottom:14px;"><div class="panel-h"><div class="panel-title">🔍 Products Detected (${prods.length})</div></div>${mkProdTable(prods)}</div>` : ''}
+    ${data.debate_rounds?.length ? `
+      <div class="panel" style="margin-bottom:14px;">
+        <div class="panel-h"><div class="panel-title">⚖️ AI Debate — ${data.debate_rounds.length} Rounds</div></div>
+        ${data.debate_rounds.map(r => mkDebateCard(r)).join('')}
+      </div>` : ''}
+  `;
+    }
+
+    function toggleVoice() {
+      const a = document.getElementById('vaudio'), b = document.getElementById('vpbtn');
+      if (!a) return;
+      if (a.paused) { a.play(); b.textContent = '⏸'; } else { a.pause(); b.textContent = '▶'; }
+    }
+
+    /* ── MOCK DATA (demo when no real shelf) ── */
+    function getMockVisionResult() {
+      return {
+        products: [
+          { product_name: 'Parle-G Biscuits', brand: 'Parle', category: 'Biscuits', stock_level: 'critical', quantity_estimate: 2, facing_correct: true, shelf_position: 'eye_level' },
+          { product_name: 'Maggi Noodles', brand: 'Nestle', category: 'Instant Food', stock_level: 'low', quantity_estimate: 5, facing_correct: false, shelf_position: 'middle' },
+          { product_name: 'Tata Salt', brand: 'Tata', category: 'Staples', stock_level: 'ok', quantity_estimate: 12, facing_correct: true, shelf_position: 'bottom' },
+          { product_name: 'Amul Butter', brand: 'Amul', category: 'Dairy', stock_level: 'critical', quantity_estimate: 1, facing_correct: true, shelf_position: 'eye_level' },
+          { product_name: 'Dettol Soap', brand: 'Reckitt', category: 'Personal Care', stock_level: 'low', quantity_estimate: 3, facing_correct: true, shelf_position: 'top' },
+          { product_name: 'Lays Chips', brand: 'PepsiCo', category: 'Snacks', stock_level: 'ok', quantity_estimate: 18, facing_correct: true, shelf_position: 'eye_level' }
+        ], shelf_health_score: 52, critical_count: 2, low_count: 2, ok_count: 2, overstocked_count: 0, empty_sections: 3, facing_issues: 1, top_restock_urgent: ['Parle-G Biscuits', 'Amul Butter', 'Maggi Noodles'], summary: 'Shelf in poor condition with multiple critical stockouts.'
+      };
+    }
+    function getMockPresenter(vision) { return `Priority restocking needed for ${vision.top_restock_urgent?.join(', ')}. These are high-velocity FMCG items that drive 60% of daily revenue. Parle-G alone sells 15-20 units/day in a typical kirana. Immediate order of 24 units Parle-G (₹480), 12 packs Maggi (₹540), 6 Amul Butter (₹360) totalling approximately ₹1,380 should restore healthy shelf levels. Additionally, Dettol Soap facing correction will improve visibility by 30%.`; }
+    function getMockCritic(vision) { return `The Presenter's plan totals ₹1,380 which represents 14-70% of a typical kirana's daily revenue — significant cash flow risk. I recommend phasing: restock only the 2 critical items today (₹840), review in 48 hours before ordering low-stock items. Maggi facing correction can be done free of cost immediately. Seasonal demand must also be considered — biscuit velocity increases 40% in monsoon. The butter order timing should align with the distributor's weekly visit to avoid multiple delivery charges.`; }
+    function getMockDecider(vision) { return `FINAL PLAN: Order today — Parle-G (24 units, ₹480) and Amul Butter (6 units, ₹360) as critical stockouts. These two items drive ~35% of daily revenue and must not remain empty. Defer Maggi to your next distributor visit to save delivery costs. Fix Maggi facing immediately — takes 2 minutes, improves sales 15-20%. Total immediate spend: ₹840. Expected revenue recovery: ₹200-300/day.`; }
+
+    /* ── LOGOUT ── */
+    function doLogout() {
+      STORE = null;
+      sessionStorage.removeItem('ss_store');
+      if (scanChart) { scanChart.destroy(); scanChart = null; }
+      goLand();
+    }
+
+    /* ── HELPERS ── */
+    function mkScanCard(s, clickable = false) {
+      return `<div class="scan-card" ${clickable ? `onclick="viewScanDetail('${s.id}')"` : 'style="cursor:default"'}>
+    ${s.image_url ? `<img class="scan-thumb" src="${s.image_url}" alt="shelf">` : `<div class="scan-ph">📷</div>`}
+    <div>
+      <div class="scan-name">${fmtDate(s.created_at)}</div>
+      <div class="scan-meta">Products: ${s.products_detected || 0} · Health: ${s.shelf_health_score || 0}% · Critical: ${s.critical_items || 0}${s.final_recommendation ? `\n${s.final_recommendation.slice(0, 80)}...` : ''}</div>
+    </div>
+    <span class="status-badge ${s.status || 'completed'}">${s.status || 'done'}</span>
+  </div>`;
+    }
+
+    function mkDebateCard(d) {
+      const modelMap = { 'presenter': 'gemini', 'critic': 'groq', 'decider': 'gemini' };
+      const mClass = modelMap[d.type] || modelMap[d.agent_type] || 'gemini';
+      const modelLabel = mClass === 'gemini' ? 'Gemini 1.5 Pro' : mClass === 'gpt' ? 'GPT-4o Mini' : 'Groq LLaMA-3.1';
+      const conf = d.confidence || d.confidence_score || 75;
+      return `<div class="debate-card ${d.type || d.agent_type}">
+    <div class="debate-agent">
+      <div class="debate-agent-name">${agentEmoji(d.type || d.agent_type)} ${d.agent || d.agent_name}</div>
+      <span class="debate-agent-model ${mClass}">${modelLabel}</span>
+    </div>
+    <div class="debate-text">${(d.output || d.recommendation || '—').slice(0, 400)}${(d.output || d.recommendation || '').length > 400 ? '...' : ''}</div>
+    <div class="debate-confidence">
+      <span class="conf-val" style="font-family:var(--mono);font-size:9px;color:var(--t3);">Confidence</span>
+      <div class="conf-bar"><div class="conf-fill" style="width:${conf}%"></div></div>
+      <span class="conf-val">${conf}%</span>
+    </div>
+  </div>`;
+    }
+
+    function mkProdTable(products) {
+      if (!products?.length) return mkEmpty('📦', 'No products', '');
+      return `<div style="overflow-x:auto;">
+    <table class="tbl">
+      <thead><tr><th>Product</th><th>Brand</th><th>Category</th><th>Stock Level</th><th>Qty</th><th>Facing</th></tr></thead>
+      <tbody>${products.map(p => `
+        <tr>
+          <td style="font-weight:600;color:var(--t0)">${p.product_name || p.name || '—'}</td>
+          <td>${p.brand || '—'}</td><td>${p.category || '—'}</td>
+          <td><span class="stock-pill ${p.stock_level || 'ok'}">${p.stock_level || 'ok'}</span></td>
+          <td style="font-family:var(--mono)">${p.quantity_estimate || p.quantity || '?'}</td>
+          <td>${p.facing_correct === false ? '<span style="color:var(--orange)">⚠ Wrong</span>' : '<span style="color:var(--acid)">✓ OK</span>'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+    }
+
+    function mkEmpty(ic, t, s) {
+      return `<div class="empty"><span class="empty-icon">${ic}</span><div class="empty-title">${t}</div><div class="empty-sub">${s}</div></div>`;
+    }
+    function mkLoader(m = 'Loading...') {
+      return `<div class="loader-row"><div class="spin"></div>${m}</div>`;
+    }
+    function agentEmoji(t) { return t === 'presenter' ? '🎤 ' : t === 'critic' ? '⚖️ ' : '🎯 '; }
+    function fmtDate(s) { try { return new Date(s).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return s || '—'; } }
+    function fmtTime(s) { try { return new Date(s).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }); } catch { return '—'; } }
+    function showMsg(el, type, msg) { el.className = `fmsg ${type}`; el.textContent = msg; el.style.display = 'block'; }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    function fileToB64(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result.split(',')[1]);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+    }
+
+    /* ── PINCODE INPUT MASK ── */
+    document.getElementById('r_pi')?.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6); });
+
+    /* ── AUTO-RESTORE SESSION ── */
+    (function restore() {
+      const s = sessionStorage.getItem('ss_store');
+      if (s) try { STORE = JSON.parse(s); } catch { }
+    })();
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+
+</body>
+
+</html>
